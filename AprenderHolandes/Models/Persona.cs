@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AprenderHolandes.Data;
+using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AprenderHolandes.Models
 {
-    public class Persona
+    public class Persona : IdentityUser<Guid>
     {
         //[Key]
         //public Guid Id { get; set; }

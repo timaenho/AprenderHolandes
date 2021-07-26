@@ -1,14 +1,17 @@
-﻿using System;
+﻿using AprenderHolandes.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AprenderHolandes.Data
 {
-    public class DbContext
+    public class DbContextInstituto : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
     {
-        public class DbContextInstituto : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
-        {
+      
             public DbContextInstituto(DbContextOptions options) : base(options) // constructor contexto
             {
 
