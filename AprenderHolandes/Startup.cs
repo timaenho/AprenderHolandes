@@ -1,5 +1,8 @@
 using AprenderHolandes.Data;
 using AprenderHolandes.Models;
+using AprenderHolandes.Repository;
+using AprenderHolandes.Servicios;
+using InstitutoEducativo.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -50,11 +53,11 @@ namespace AprenderHolandes
                     opciones.AccessDeniedPath = "/Accounts/AccesoDenegado";
                 });
             services.AddControllersWithViews();
-            //services.Configure<SMTPConfig>(Configuration.GetSection("SMTPConfig"));
-            //services.AddScoped<IDbInicializador, DbInicializador>();
-           // services.AddScoped<IAccountRepository, AccountRepository>();
-            //services.AddScoped<IEmailService, EmailService>();
-           // services.AddScoped<IUserClaimsPrincipalFactory<Persona>, ApplicationUserClaimsPrincipalFactory>();
+            services.Configure<SMTPConfig>(Configuration.GetSection("SMTPConfig"));
+            services.AddScoped<IDbInicializador, DbInicializador>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IUserClaimsPrincipalFactory<Persona>, ApplicationUserClaimsPrincipalFactory>();
 
         }
 
@@ -82,7 +85,7 @@ namespace AprenderHolandes
                 {
                     miContexto.Database.Migrate();// --> asegura la base de datos y ejecuta todas las migraciones
                 }
-              //  serviceScope.ServiceProvider.GetService<IDbInicializador>().Seed();
+              serviceScope.ServiceProvider.GetService<IDbInicializador>().Seed();
             }
 
 

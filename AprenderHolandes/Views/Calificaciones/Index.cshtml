@@ -1,0 +1,50 @@
+﻿@model IEnumerable<AprenderHolandes.Models.Calificacion>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Mis Calificaciones</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NotaFinal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alumno.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alumno.Apellido)
+            </th>
+            <th>
+                @Html.Raw("Materia")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NotaFinal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alumno.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alumno.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Materia.Nombre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CalificacionId">Editar</a> 
+                <a class="text-hide" asp-action="Details" asp-route-id="@item.CalificacionId">Detalles</a> 
+                <a class="text-hide" asp-action="Delete" asp-route-id="@item.CalificacionId">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

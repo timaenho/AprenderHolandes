@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AprenderHolandes.Models.MateriaCursada>
+
+@{
+    ViewData["Title"] = "MisMateriaFuturos";
+}
+
+<h1>Mis Futuras Materias</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.Raw("Nombre Materia")
+            </th>
+            <th>
+                @Html.Raw("Nombre Curso")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Materia.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                <a class="btn btn-outline-secondary" asp-controller="MateriaCursadas" asp-action="Details" asp-route-id="@item.MateriaCursadaId">Detalles</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

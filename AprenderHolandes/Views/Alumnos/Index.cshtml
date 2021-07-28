@@ -1,0 +1,74 @@
+﻿@model IEnumerable<AprenderHolandes.Models.Alumno>
+@inject SignInManager<Persona> _signInManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="bg-danger">@TempData["MensajeFalla"]</div>
+<div class="bg-success">@TempData["MensajeExito"]</div>
+<h1>Alumnos</h1>
+
+<p>
+    @if (_signInManager.IsSignedIn(User))
+    {
+        @if (User.IsInRole("Empleado"))
+        {
+            <a asp-action="Create">Crear Nuevo</a>
+        }
+        @if (User.IsInRole("Alumno"))
+        {
+            <a asp-action="RegistrarMaterias">Registrar materias</a>
+            <a class="btn btn-outline-secondary" asp-controller="Alumnos" asp-action="verMateriasCursadasAlumno">Ver Materias ya cursadas</a>
+        }
+    }
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+
+            @if (_signInManager.IsSignedIn(User))
+            {
+                @if (User.IsInRole("Empleado"))
+                {
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+            <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+
+            @if (item.Activo == false)
+            {
+                <a asp-action="ActivarAlumno" asp-route-id="@item.Id">| Activar alumno</a>
+            }
+        </td>
+                }
+            }
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<AprenderHolandes.Models.AlumnoMateriaCursada>
+
+@{
+    ViewData["Title"] = "MostrarAlumnosPorMateriaCursada";
+}
+
+<h1>Mis Alumnos De @ViewData["MateriaCursadaNombre"]</h1>
+
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Alumno.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alumno.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calificacion.NotaFinal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alumno.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alumno.Apellido)
+            </td>
+            <td>
+                @if (item.Calificacion.NotaFinal == -1111)
+                {
+                    @Html.Raw("Sin Calificación")
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Calificacion.NotaFinal)
+                }
+
+            </td>
+
+            <td>
+                @if (item.MateriaCursada.Activo)
+                {
+                    <a class="btn btn-outline-secondary" asp-controller="Calificaciones" asp-action="Edit" asp-route-id="@item.CalificacionId">Dar Calificacion</a>}
+
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

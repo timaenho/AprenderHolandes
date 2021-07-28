@@ -1,0 +1,34 @@
+﻿@model AprenderHolandes.Models.Calificacion
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+<h4>Dar Calificacion</h4>
+<div class="bg-danger ">
+    @TempData["Message"]
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CalificacionId" />
+            <div class="form-group">
+                <label asp-for="NotaFinal" class="control-label"></label>
+                <input asp-for="NotaFinal" class="form-control" />
+                <span asp-validation-for="NotaFinal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Lista de Calificaciones</a>
+</div>
+

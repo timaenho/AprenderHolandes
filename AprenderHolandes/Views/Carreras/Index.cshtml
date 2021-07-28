@@ -1,0 +1,34 @@
+﻿@model IEnumerable<AprenderHolandes.Models.Carrera>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Carrera</h1>
+
+<p>
+    <a asp-action="Create">Crear Nueva</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CarreraId">Editar</a>
+                <a class="text-hide" asp-action="Delete" asp-route-id="@item.CarreraId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

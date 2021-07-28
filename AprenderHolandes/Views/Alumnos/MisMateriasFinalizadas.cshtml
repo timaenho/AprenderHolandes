@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AprenderHolandes.Models.AlumnoMateriaCursada>
+
+@{
+    ViewData["Title"] = "MisMaterias";
+}
+
+<div class="bg-danger">@TempData["Message"]</div>
+
+<h1>Mis Materias Finalizadas</h1>
+
+<a class="btn btn-outline-secondary" asp-controller="Alumnos" asp-action="MisMaterias" asp-route-id="">Ver Materias En Curso</a>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.Raw("Nombre Curso")
+            </th>
+            <th>
+                @Html.Raw("Nombre Materia")
+            </th>
+            <th>
+                @Html.Raw("Nota Final")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.MateriaCursada.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MateriaCursada.Materia.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calificacion.NotaFinal)
+            </td>
+            <td>
+                <a class="btn btn-outline-secondary" asp-controller="MateriaCursadas" asp-action="Details" asp-route-id="@item.MateriaCursadaId">Detalle</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

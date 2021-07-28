@@ -1,0 +1,50 @@
+﻿@model AprenderHolandes.Models.Materia
+
+@{
+    ViewData["Title"] = "AgregarMateriaMostrar";
+}
+
+<h1>Querés estudiar esta materia?</h1>
+
+<div>
+    <h4>Materia</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodigoMateria)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodigoMateria)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CupoMaximo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CupoMaximo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Carrera)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Carrera.Nombre)
+        </dd>
+        <div>
+            <a class="btn btn-outline-secondary" asp-controller="Alumnos" asp-action="agregarMateria" asp-route-id="@Model.MateriaId">Inscribirse</a>
+        </div>
+    </dl>
+</div>
+<div>
+
+</div>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<AprenderHolandes.Models.AlumnoMateriaCursada>
+
+@{
+    ViewData["Title"] = "VerMateriasCursadas";
+}
+
+<h1>Materias Cursadas</h1>
+
+<p>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Alumno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MateriaCursada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calificacion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alumno.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MateriaCursada.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calificacion.CalificacionId)
+            </td>
+            <td>
+              
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

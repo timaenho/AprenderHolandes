@@ -1,0 +1,57 @@
+﻿@model IEnumerable<AprenderHolandes.ViewModels.MisMateriasConNotaPromedio>
+
+@{
+    ViewData["Title"] = "MisMaterias";
+}
+
+<h1>Mis Materias En Curso</h1>
+<a class="btn btn-outline-secondary" asp-controller="Profesores" asp-action="ListarMateriasCursadasFinalizadas" asp-route-id="">Ver Cursos Finalizados</a>
+<a class="btn btn-outline-secondary" asp-controller="Profesores" asp-action="MisMateriaFuturos" asp-route-id="">Ver Cursos futuros</a>
+<p>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.materia.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.materia.Descripcion)
+            </th>
+            <th>
+                @Html.Raw("Nota Promedio")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.materia.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.materia.Descripcion)
+                </td>
+                <td>
+                    @if (item.promedioMateria == -1111)
+                    {
+                        @Html.Raw("Sin Calificaciones")
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.promedioMateria)
+                    }
+
+                </td>
+                <td>
+                    <a class="btn btn-outline-secondary" asp-controller="Materias" asp-action="Details" asp-route-id="@item.materia.MateriaId">Detalles</a>
+                    <a class="btn btn-outline-secondary" asp-controller="Profesores" asp-action="ListarMateriasCursadas" asp-route-id="@item.materia.MateriaId">Ver Cursos</a>
+                </td>
+            </tr>
+            </tr>
+        }
+    </tbody>
+</table>

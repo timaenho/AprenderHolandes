@@ -1,0 +1,63 @@
+﻿@model IEnumerable<AprenderHolandes.Models.MateriaCursada>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Materia Cursada</h1>
+
+<p>
+    <a asp-action="Create">Crear Nueva</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cuatrimestre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Materia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Profesor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cuatrimestre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Materia.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profesor.Apellido)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MateriaCursadaId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.MateriaCursadaId">Detalles</a> 
+                <a class="text-hide" asp-action="Delete" asp-route-id="@item.MateriaCursadaId">Delete</a> 
+                @if (item.Activo == false)
+                {
+            <a asp-action="ActivarMateriaCursada" asp-route-id="@item.MateriaCursadaId">| Activar</a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

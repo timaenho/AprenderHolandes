@@ -1,0 +1,104 @@
+﻿@model IEnumerable<AprenderHolandes.Models.MateriaCursada>
+
+@{
+    ViewData["Title"] = "MisAlumnos";
+}
+
+<h1>Mis Alumnos</h1>
+<h5>Por materia y por curso</h5>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.Raw("Materia")
+            </th>
+            <th>
+                @Html.Raw("Curso")
+            </th>
+            <th>
+                @Html.Raw("Activo")
+            </th>
+            <th>
+                @Html.Raw("Nombre")
+            </th>
+            <th>
+                @Html.Raw("Apellido")
+            </th>
+            <th>
+                @Html.Raw("Mail")
+            </th>
+            <th>
+                @Html.Raw("Calificacion")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Materia.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @if (item.Activo)
+                {
+                    @Html.Raw("Activo")
+                }
+                else
+                {
+                    @Html.Raw("Inactivo")
+                }
+            </td>
+            <td>
+                @foreach (var alumno in item.AlumnoMateriaCursadas)
+                {
+
+                    <div>@alumno.Alumno.Nombre</div>
+
+                }
+            </td>
+            <td>
+                @foreach (var alumno in item.AlumnoMateriaCursadas)
+                {
+
+                    <div>@alumno.Alumno.Apellido</div>
+
+                }
+            </td>
+            <td>
+                @foreach (var alumno in item.AlumnoMateriaCursadas)
+                {
+
+                    <div>@alumno.Alumno.Email</div>
+
+                }
+            </td>
+            <td>
+                @foreach (var alumno in item.AlumnoMateriaCursadas)
+                {
+                    if (alumno.Calificacion.NotaFinal != -1111)
+                    {
+                        <div>@alumno.Calificacion.NotaFinal</div>
+                    }
+                    else
+                    {
+
+                        <div>Sin Calificacion</div>
+                        @*<div>
+                        <a class="btn btn-outline-secondary" asp-controller="Calificaciones" asp-action="Edit" asp-route-id="@alumno.CalificacionId">Dar Calificaciones</a>
+                    </div>*@
+
+
+                    }
+
+                }
+            </td>
+
+
+        </tr>
+}
+    </tbody>
+</table>

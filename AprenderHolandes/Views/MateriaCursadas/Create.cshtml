@@ -1,0 +1,57 @@
+﻿@model AprenderHolandes.Models.MateriaCursada
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>Materia Cursada</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label" hidden></label>
+                <input asp-for="Nombre" value="empty" class="form-control" hidden/>
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label"></label> @Html.Raw("Año")
+                <input asp-for="Anio" class="form-control" />
+                <span asp-validation-for="Anio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cuatrimestre" class="control-label"></label>
+                <input asp-for="Cuatrimestre" class="form-control" />
+                <span asp-validation-for="Cuatrimestre" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Activo" /> @Html.DisplayNameFor(model => model.Activo)
+                </label>
+            </div>
+            <div class="form-group">
+                <label  class="control-label"></label> @Html.Raw("Materia")
+                <select asp-for="MateriaId" class="form-control" asp-items="ViewBag.MateriaId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label"></label> @Html.Raw("Profesor")
+                <select asp-for="ProfesorId" class="form-control" asp-items="ViewBag.ProfesorId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver a Materia Cursada</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
