@@ -7,6 +7,8 @@ namespace AprenderHolandes.Models
 {
     public class MateriaCursadaEvaluacion
     {
+
+        public Guid Id { get; set; }
         public Evaluacion Evaluacion { get; set; }
 
         public MateriaCursada MateriaCursada { get; set; }

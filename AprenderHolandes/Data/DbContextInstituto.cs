@@ -48,6 +48,7 @@ namespace AprenderHolandes.Data
                     .WithMany(m => m.AlumnoMateriaCursadas)
                     .HasForeignKey(ma => ma.MateriaCursadaId);
 
+
                 #endregion
 
                 #region Model Builders

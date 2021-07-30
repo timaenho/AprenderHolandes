@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AprenderHolandes.Data;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,17 +9,25 @@ namespace AprenderHolandes.Models
 {
     public class AlumnoMateriaCursadaNota
     {
-        
-        public Alumno alumno { get; set; }
+        [Required(ErrorMessage = Validaciones.Required)]
+        public Guid Id { get; set; }
 
+        [Required(ErrorMessage = Validaciones.Required)]
+        public Alumno Alumno { get; set; }
+
+        [Required(ErrorMessage = Validaciones.Required)]
         public AlumnoMateriaCursada AlumnoMateriaCursada { get; set; }
 
-        public MateriaCursada materiaCursada { get; set; }
+        [Required(ErrorMessage = Validaciones.Required)]
+        public MateriaCursada MateriaCursada { get; set; }
 
+        [Required(ErrorMessage = Validaciones.Required)]
         public string Nota { get; set; }
 
-        public Profesor profesor { get; set; }
+        [Required(ErrorMessage = Validaciones.Required)]
+        public Profesor Profesor { get; set; }
 
-        public Evaluacion evaluacion { get; set; }
+        [Required(ErrorMessage = Validaciones.Required)]
+        public Evaluacion Evaluacion { get; set; }
     }
 }

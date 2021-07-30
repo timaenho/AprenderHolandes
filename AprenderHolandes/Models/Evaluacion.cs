@@ -10,9 +10,10 @@ namespace AprenderHolandes.Models
     public class Evaluacion
     {
         [Required(ErrorMessage = Validaciones.Required)]
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = Validaciones.Required)]
+        [MaxLength(50, ErrorMessage = Validaciones.MaxLength)]
         public string Titulo { get; set; }
 
         [Required(ErrorMessage = Validaciones.Required)]
@@ -22,9 +23,9 @@ namespace AprenderHolandes.Models
         public Materia Materia { get; set; }
 
         [Required(ErrorMessage = Validaciones.Required)]
-        Profesor profesor { get; set; }
+        Profesor Profesor { get; set; }
 
-        public ICollection<MateriaCursadaEvaluacion> {get; set;}
+        public ICollection<MateriaCursadaEvaluacion> materiaCursadaEvaluaciones{get; set;}
      
 
 
