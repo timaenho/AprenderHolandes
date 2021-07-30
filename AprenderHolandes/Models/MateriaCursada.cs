@@ -24,6 +24,7 @@ namespace AprenderHolandes.Models
 		[Range(1, 2, ErrorMessage = Validaciones.NumeroMayorMenorA)]
 		public int Cuatrimestre { get; set; }
 
+
 		public bool Activo { get; set; }
 
 		[ForeignKey(nameof(Materia))]

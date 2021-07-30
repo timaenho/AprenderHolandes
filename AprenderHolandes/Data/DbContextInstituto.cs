@@ -49,10 +49,13 @@ namespace AprenderHolandes.Data
                     .HasForeignKey(ma => ma.MateriaCursadaId);
 
 
-                #endregion
+            #endregion
+
+                #region N:M MateriaCursada --> Evaluaciòn 
+            #endregion
 
                 #region Model Builders
-                modelbuilder.Entity<IdentityUser<Guid>>().ToTable("Personas");
+            modelbuilder.Entity<IdentityUser<Guid>>().ToTable("Personas");
                 modelbuilder.Entity<IdentityRole<Guid>>().ToTable("Roles");
                 modelbuilder.Entity<IdentityUserRole<Guid>>().ToTable("PersonasRoles");
                 #endregion

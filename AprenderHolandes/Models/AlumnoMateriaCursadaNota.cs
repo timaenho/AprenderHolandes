@@ -19,6 +19,9 @@ namespace AprenderHolandes.Models
         public AlumnoMateriaCursada AlumnoMateriaCursada { get; set; }
 
         [Required(ErrorMessage = Validaciones.Required)]
+        public MateriaCursadaEvaluacion MateriaCursadaEvaluacion  {get;set;}
+
+        [Required(ErrorMessage = Validaciones.Required)]
         public MateriaCursada MateriaCursada { get; set; }
 
         [Required(ErrorMessage = Validaciones.Required)]
@@ -27,7 +30,5 @@ namespace AprenderHolandes.Models
         [Required(ErrorMessage = Validaciones.Required)]
         public Profesor Profesor { get; set; }
 
-        [Required(ErrorMessage = Validaciones.Required)]
-        public Evaluacion Evaluacion { get; set; }
     }
 }
