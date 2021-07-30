@@ -33,6 +33,8 @@ namespace AprenderHolandes.Models
 
 		public ICollection<Calificacion> Calificaciones { get; set; }
 
+		public ICollection<Evaluacion> Evaluaciones { get; set; }
+
 		[ForeignKey(nameof(Carrera))]
 		public Guid CarreraId { get; set; }
 		public Carrera Carrera { get; set; }

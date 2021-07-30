@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace AprenderHolandes.Models
 {
-    public class MateriaCursada
-    {
+	public class MateriaCursada
+	{
 		public Guid MateriaCursadaId { get; set; }
 
 		[Required(ErrorMessage = Validaciones.Required)]
@@ -37,5 +37,7 @@ namespace AprenderHolandes.Models
 		public List<AlumnoMateriaCursada> AlumnoMateriaCursadas { get; set; }
 
 		public ICollection<Calificacion> Calificaciones { get; set; }
+
+		public ICollection<MateriaCursadaEvaluacion> MateriaCursadaEvaluaciones {get; set;}
 	}
 }
