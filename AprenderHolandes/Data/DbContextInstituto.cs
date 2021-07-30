@@ -25,11 +25,16 @@ namespace AprenderHolandes.Data
             public DbSet<Carrera> Carreras { get; set; }
             public DbSet<Empleado> Empleados { get; set; }
             public DbSet<Materia> Materias { get; set; }
+            public DbSet<Clase> Clases { get; set; }
             public DbSet<MateriaCursada> MateriaCursadas { get; set; }
             public DbSet<Profesor> Profesores { get; set; }
             public DbSet<Rol> Roles { get; set; }
+            public DbSet<AlumnoMateriaCursadaEvaluaciondaNota> AlumnoMateriaCursadaEvaluaciondaNotas { get; set; }
+            public DbSet<Evaluacion> Evaluaciones { get; set; }
+            public DbSet<MateriaCursadaEvaluacion> MateriaCursadaEvaluaciones{ get; set; }
 
-            protected override void OnModelCreating(ModelBuilder modelbuilder)
+
+        protected override void OnModelCreating(ModelBuilder modelbuilder)
             {
                 base.OnModelCreating(modelbuilder);
 
@@ -51,10 +56,38 @@ namespace AprenderHolandes.Data
 
             #endregion
 
-                #region N:M MateriaCursada --> Evaluaciòn 
+            #region N:M MateriaCursada Evaluación --> MateriaCursadaEvaluación 
+            modelbuilder.Entity<MateriaCursadaEvaluacion>()
+                    .HasKey(mce => new { mce.MateriaCursadaId, mce.EvaluacionId });
+
+            modelbuilder.Entity<MateriaCursadaEvaluacion>()
+                .HasOne(ma => ma.MateriaCursada)
+                .WithMany(a => a.MateriaCursadaEvaluaciones)
+                .HasForeignKey(ma => ma.MateriaCursadaId);
+
+            modelbuilder.Entity<MateriaCursadaEvaluacion>()
+                .HasOne(ma => ma.Evaluacion)
+                .WithMany(m => m.MateriaCursadaEvaluaciones)
+                .HasForeignKey(ma => ma.EvaluacionId);
             #endregion
 
-                #region Model Builders
+            //#region N:M MateriaCursadaEvaluacion Alumno --> AlumnoMateriaCursadaEvaluacionNota
+            //modelbuilder.Entity<AlumnoMateriaCursadaEvaluaciondaNota>()
+            //         .HasKey(amcn => new { amcn.MateriaCursadaEvaluacionId, amcn.AlumnoId });
+
+            //modelbuilder.Entity<AlumnoMateriaCursadaEvaluaciondaNota>()
+            //    .HasOne(ma => ma.Alumno)
+            //    .WithMany(a => a.AlumnoMateriaCursadaEvaluaciondaNotas)
+            //    .HasForeignKey(ma => ma.AlumnoId);
+
+            //modelbuilder.Entity<AlumnoMateriaCursadaEvaluaciondaNota>()
+            //    .HasOne(ma => ma.MateriaCursadaEvaluacion)
+            //    .WithMany(m => m.AlumnoMateriaCursadaEvaluaciondaNotas)
+            //    .HasForeignKey(ma => ma.MateriaCursadaEvaluacionId);
+
+            //#endregion
+
+            #region Model Builders
             modelbuilder.Entity<IdentityUser<Guid>>().ToTable("Personas");
                 modelbuilder.Entity<IdentityRole<Guid>>().ToTable("Roles");
                 modelbuilder.Entity<IdentityUserRole<Guid>>().ToTable("PersonasRoles");

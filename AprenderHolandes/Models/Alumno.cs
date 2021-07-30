@@ -20,6 +20,6 @@ namespace AprenderHolandes.Models
 		public Guid CarreraId { get; set; }
 		public Carrera Carrera { get; set; }
 
-		public ICollection<AlumnoMateriaCursadaEvaluaciondaNota> AlumnoMateriaCursadaEvaluaciondaNota { get; set; }
+		public ICollection<AlumnoMateriaCursadaEvaluaciondaNota> AlumnoMateriaCursadaEvaluaciondaNotas { get; set; }
 	}
 }

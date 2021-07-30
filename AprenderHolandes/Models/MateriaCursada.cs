@@ -35,10 +35,15 @@ namespace AprenderHolandes.Models
 		public Guid ProfesorId { get; set; }
 		public Profesor Profesor { get; set; }
 
+
+
+
 		public List<AlumnoMateriaCursada> AlumnoMateriaCursadas { get; set; }
 
 		public ICollection<Calificacion> Calificaciones { get; set; }
 
 		public ICollection<MateriaCursadaEvaluacion> MateriaCursadaEvaluaciones {get; set;}
+
+		public ICollection<Clase> Clases { get; set; }
 	}
 }

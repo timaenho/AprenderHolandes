@@ -4,14 +4,16 @@ using AprenderHolandes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprenderHolandes.Migrations
 {
     [DbContext(typeof(DbContextInstituto))]
-    partial class DbContextInstitutoModelSnapshot : ModelSnapshot
+    [Migration("20210730233443_Third migration")]
+    partial class Thirdmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -617,13 +619,13 @@ namespace AprenderHolandes.Migrations
                     b.HasOne("AprenderHolandes.Models.MateriaCursada", "MateriaCursada")
                         .WithMany("Clases")
                         .HasForeignKey("MateriaCursadaId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AprenderHolandes.Models.Profesor", "Profesor")
                         .WithMany()
                         .HasForeignKey("ProfesorId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
