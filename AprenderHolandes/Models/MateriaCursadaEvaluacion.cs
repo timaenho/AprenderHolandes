@@ -13,14 +13,16 @@ namespace AprenderHolandes.Models
         public Guid Id { get; set; }
 
         [Required(ErrorMessage=Validaciones.Required)]
+        public Guid EvaluacionId { get; set; }
         public Evaluacion Evaluacion { get; set; }
 
         [Required(ErrorMessage = Validaciones.Required)] 
+        public Guid MateriaCursadaId { get; set; }
         public MateriaCursada MateriaCursada { get; set; }
 
         public bool Activo { get; set; }
 
-        public AlumnoMateriaCursadaNota AlumnoMateriaCursadaNota { get; set; }
+        public AlumnoMateriaCursadaEvaluaciondaNota AlumnoMateriaCursadaEvaluaciondaNota { get; set; }
 
 
     }

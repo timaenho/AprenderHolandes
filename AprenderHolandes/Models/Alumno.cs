@@ -19,5 +19,7 @@ namespace AprenderHolandes.Models
 		[ForeignKey(nameof(Carrera))]
 		public Guid CarreraId { get; set; }
 		public Carrera Carrera { get; set; }
+
+		public ICollection<AlumnoMateriaCursadaEvaluaciondaNota> AlumnoMateriaCursadaEvaluaciondaNota { get; set; }
 	}
 }

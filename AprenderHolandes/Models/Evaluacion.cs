@@ -25,7 +25,7 @@ namespace AprenderHolandes.Models
         [Required(ErrorMessage = Validaciones.Required)]
         Profesor Profesor { get; set; }
 
-        public ICollection<MateriaCursadaEvaluacion> materiaCursadaEvaluaciones{get; set;}
+        public ICollection<MateriaCursadaEvaluacion> MateriaCursadaEvaluaciones{get; set;}
      
 
 

@@ -22,6 +22,6 @@ namespace AprenderHolandes.Models
         public Guid CalificacionId { get; set; }
         public Calificacion Calificacion { get; set; }
 
-        public ICollection <AlumnoMateriaCursadaNota> alumnoMateriaCursadaNotas {get; set;}
+       
     }
 }

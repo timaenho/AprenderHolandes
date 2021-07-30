@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AprenderHolandes.Models
 {
-    public class AlumnoMateriaCursadaNota
+    public class AlumnoMateriaCursadaEvaluaciondaNota
     {
         [Required(ErrorMessage = Validaciones.Required)]
         public Guid Id { get; set; }
@@ -16,13 +16,7 @@ namespace AprenderHolandes.Models
         public Alumno Alumno { get; set; }
 
         [Required(ErrorMessage = Validaciones.Required)]
-        public AlumnoMateriaCursada AlumnoMateriaCursada { get; set; }
-
-        [Required(ErrorMessage = Validaciones.Required)]
         public MateriaCursadaEvaluacion MateriaCursadaEvaluacion  {get;set;}
-
-        [Required(ErrorMessage = Validaciones.Required)]
-        public MateriaCursada MateriaCursada { get; set; }
 
         [Required(ErrorMessage = Validaciones.Required)]
         public string Nota { get; set; }
