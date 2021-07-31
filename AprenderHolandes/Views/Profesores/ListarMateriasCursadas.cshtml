@@ -16,12 +16,6 @@
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
-                @Html.Raw("Año")
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cuatrimestre)
-            </th>
-            <th>
                 @Html.Raw("Nota Promedio")
             </th>
         </tr>
@@ -32,12 +26,6 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Anio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cuatrimestre)
                 </td>
                 <td>
                     @if (Double.IsNaN(item.NotaPromedio))

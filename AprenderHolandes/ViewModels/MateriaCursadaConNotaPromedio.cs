@@ -25,21 +25,8 @@ namespace AprenderHolandes.ViewModels
                 return materiaCursada.Nombre;
             }
         }
-        public int Anio
-        {
-            get
-            {
-                return materiaCursada.Anio;
-            }
-        }
+       
 
-        public int Cuatrimestre
-        {
-            get
-            {
-                return materiaCursada.Cuatrimestre;
-            }
-        }
 
         public double NotaPromedio
         {

@@ -407,25 +407,7 @@ namespace AprenderHolandes.Controllers
                                 materiaCursadaLibre = mc;
                             }
                         }
-                        if (materiaCursadaLibre == null)
-                        {
-
-                            var firstMateriaCursada = materia.MateriasCursadas.First();
-                            materiaCursadaLibre = new MateriaCursada
-                            {
-                                MateriaCursadaId = Guid.NewGuid(),
-                                MateriaId = materia.MateriaId,
-                                Anio = firstMateriaCursada.Anio,
-                                Cuatrimestre = firstMateriaCursada.Cuatrimestre,
-                                Activo = true,
-                                Materia = firstMateriaCursada.Materia,
-                                ProfesorId = firstMateriaCursada.ProfesorId,
-                                Nombre = materia.Nombre + " - " + (materia.MateriasCursadas.Count + 1) + ", " + DateTime.Now.Year + "- cuatrimestre " + firstMateriaCursada.Cuatrimestre,
-                                Calificaciones = new List<Calificacion>()
-                            };
-                            _context.MateriaCursadas.Add(materiaCursadaLibre);
-                            _context.SaveChanges();
-                        }
+                   
 
                         #endregion
                         Guid calificacionId = Guid.NewGuid();

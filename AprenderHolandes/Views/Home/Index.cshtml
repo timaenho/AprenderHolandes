@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<AprenderHolandes.Models.MateriaCursada>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -41,6 +42,35 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
+</div>
+
+<hr />
+
+<div>
+    <h5>Cursos</h5>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        <a asp-action="" asp-route-id=""></a> 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 

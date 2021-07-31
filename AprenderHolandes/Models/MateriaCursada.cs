@@ -16,15 +16,6 @@ namespace AprenderHolandes.Models
 		[MaxLength(100, ErrorMessage = Validaciones.MaxLength)]
 		public string Nombre { get; set; }
 
-		[Required(ErrorMessage = Validaciones.Required)]
-		[Range(1, 6, ErrorMessage = Validaciones.NumeroMayorMenorA)]
-		public int Anio { get; set; }
-
-		[Required(ErrorMessage = Validaciones.Required)]
-		[Range(1, 2, ErrorMessage = Validaciones.NumeroMayorMenorA)]
-		public int Cuatrimestre { get; set; }
-
-
 		public bool Activo { get; set; }
 
 		[ForeignKey(nameof(Materia))]
@@ -35,8 +26,30 @@ namespace AprenderHolandes.Models
 		public Guid ProfesorId { get; set; }
 		public Profesor Profesor { get; set; }
 
+		[Required(ErrorMessage = Validaciones.Required)]
+		[DataType(DataType.Date)]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+		public DateTime FechaInicio { get; set; }
 
+		[Required(ErrorMessage = Validaciones.Required)]
+		[DataType(DataType.Date)]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+		public DateTime FechaTermino { get; set; }
 
+		[Required(ErrorMessage = Validaciones.Required)]
+		public string Dia { get; set; }
+
+		[Required(ErrorMessage = Validaciones.Required)]
+		public string Hora { get; set; }
+
+		[Required(ErrorMessage = Validaciones.Required)]
+		public int CantidadHorasPorSemana { get; set; }
+
+		[Required(ErrorMessage = Validaciones.Required)]
+		public string Descripcion { get; set; }
+
+		[Required(ErrorMessage = Validaciones.Required)]
+		public int Precio { get; set; }
 
 		public List<AlumnoMateriaCursada> AlumnoMateriaCursadas { get; set; }
 

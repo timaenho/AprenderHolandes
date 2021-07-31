@@ -4,29 +4,18 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Crear</h1>
+<h1>Create</h1>
 
-<h4>Materia Cursada</h4>
+<h4>MateriaCursada</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
-
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label" hidden></label>
-                <input asp-for="Nombre" value="empty" class="form-control" hidden/>
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label"></label> @Html.Raw("Año")
-                <input asp-for="Anio" class="form-control" />
-                <span asp-validation-for="Anio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cuatrimestre" class="control-label"></label>
-                <input asp-for="Cuatrimestre" class="form-control" />
-                <span asp-validation-for="Cuatrimestre" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -34,22 +23,57 @@
                 </label>
             </div>
             <div class="form-group">
-                <label  class="control-label"></label> @Html.Raw("Materia")
-                <select asp-for="MateriaId" class="form-control" asp-items="ViewBag.MateriaId"></select>
+                <label asp-for="MateriaId" class="control-label"></label>
+                <select asp-for="MateriaId" class ="form-control" asp-items="ViewBag.MateriaId"></select>
             </div>
             <div class="form-group">
-                <label class="control-label"></label> @Html.Raw("Profesor")
-                <select asp-for="ProfesorId" class="form-control" asp-items="ViewBag.ProfesorId"></select>
+                <label asp-for="ProfesorId" class="control-label"></label>
+                <select asp-for="ProfesorId" class ="form-control" asp-items="ViewBag.ProfesorId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
+                <label asp-for="FechaInicio" class="control-label"></label>
+                <input asp-for="FechaInicio" class="form-control" />
+                <span asp-validation-for="FechaInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaTermino" class="control-label"></label>
+                <input asp-for="FechaTermino" class="form-control" />
+                <span asp-validation-for="FechaTermino" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dia" class="control-label"></label>
+                <input asp-for="Dia" class="form-control" />
+                <span asp-validation-for="Dia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hora" class="control-label"></label>
+                <input asp-for="Hora" class="form-control" />
+                <span asp-validation-for="Hora" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CantidadHorasPorSemana" class="control-label"></label>
+                <input asp-for="CantidadHorasPorSemana" class="form-control" />
+                <span asp-validation-for="CantidadHorasPorSemana" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Volver a Materia Cursada</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

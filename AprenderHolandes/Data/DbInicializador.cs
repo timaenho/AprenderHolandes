@@ -55,36 +55,13 @@ namespace InstitutoEducativo.Data
 
             }
             CreoDatos();
-            DesactivarMateriasCursadasCuatrimestre(8,1); // desactivar MateriasCursadas primer cuatrimestre
-            DesactivarMateriasCursadasCuatrimestre(1, 2); //desactivar MateriasCursadas segundo cuatrimestre
-
+           
           
 
 
         }
 
-        private void DesactivarMateriasCursadasCuatrimestre (int mes, int cuatrimestre)
-        {
-
-            if (DateTime.Now.Month == mes)
-            {
-                if(_context.MateriaCursadas != null)
-                {
-                    foreach (MateriaCursada mc in _context.MateriaCursadas)
-                    {
-                        if(mc.Cuatrimestre == cuatrimestre)
-                        {
-                            mc.Activo = false;
-                            _context.Update(mc);
-
-                        }
-                     }
-                }
-               
-            }
-            _context.SaveChanges();
-               
-        }
+       
         private  void IniciarRol(string nombre)
         {
             _rolManager.CreateAsync(new Rol() { Name = nombre }).Wait();
@@ -111,15 +88,15 @@ namespace InstitutoEducativo.Data
             Persona profesor = new Profesor
             {
                 Id = Guid.NewGuid(),
-                Nombre = "profesor",
-                UserName = "profesor@profesor.com",
-                Email = "profesor@profesor.com",
+                Nombre = "Tom",
+                UserName = "tom.maenhout@gmail.com",
+                Email = "tom.maenhout@gmail.com",
                 Direccion = "Avenida Libertador, Buenos Aires",
                 Telefono = "1122345678",
                 Dni = "12345621",
-                Apellido = "profe",
+                Apellido = "Maenhout",
                 FechaAlta = DateTime.Now,
-                Legajo = "Profesor-12346",
+                Legajo = "Profesor-00001",
                 CalificacionesRealizadas = new List<Calificacion>(),
                 MateriasCursadasActivas = new List<MateriaCursada>()
             };
@@ -137,25 +114,20 @@ namespace InstitutoEducativo.Data
             Carrera carrera = new Carrera
             {
                 CarreraId = Guid.NewGuid(),
-                Nombre = "Analisis De Sistemas"
+                Nombre = "Holandés"
 
             };
 
             _context.Carreras.Add(carrera);
             _context.SaveChanges();
 
-            crearMateria("Programacion", carrera, "p-01","codigo", 1);
-            crearMateria("Ingles", carrera,"i-03", "English",1);
-            crearMateria("Programacion2",carrera,"p-02", "codigo",1);
-            crearMateria("Base De Datos", carrera, "b-01", "datos",1);
-            crearMateria("Base De Datos 2", carrera, "b-02", "datos",1);
+            crearMateria("Nivel 1", carrera, "n-01","", 1);
+            crearMateria("Nivel 2", carrera,"n-02", "",1);
+            crearMateria("Nivel 3", carrera,"n-03", "",1);
+            crearMateria("Nivel 4", carrera, "n-04", "",1);
+            crearMateria("Nivel 5", carrera, "n-05", "",1);
 
-            crearMateria("Programacion 3", carrera, "p-01", "codigo",2);
-            crearMateria("Ingles 2", carrera, "i-03", "English",2);
-            crearMateria("Estudios judaicos ", carrera, "p-02", "codigo",2);
-            crearMateria("Analisis y metodologia", carrera, "b-01", "datos",2);
-            crearMateria("Base De Datos 3", carrera, "b-02", "datos",2);
-
+           
             Persona alumno = new Alumno
             {
                 Id = Guid.NewGuid(),
@@ -225,28 +197,9 @@ namespace InstitutoEducativo.Data
             _context.Materias.Add(materia);
             _context.SaveChanges();
 
-            crearMateriaCursada(materia, cuatrimestre);
+           
         }
-        private void crearMateriaCursada(Materia materia, int cuatrimestre)
-        {
-            var profesor = _context.Profesores.FirstOrDefault(p => p.Nombre == "profesor");
-            MateriaCursada materiaCursada = new MateriaCursada
-            {
-                MateriaCursadaId = Guid.NewGuid(),
-                Nombre = materia.Nombre + (materia.MateriasCursadas.Count + 1),
-                Anio = 1,
-                Cuatrimestre = cuatrimestre,
-                Activo = true,
-                MateriaId = materia.MateriaId,
-                Materia = materia,
-                ProfesorId = profesor.Id,
-                Profesor = profesor,
-                AlumnoMateriaCursadas = new List<AlumnoMateriaCursada>(),
-                Calificaciones = new List<Calificacion>()
-            };
-
-            _context.MateriaCursadas.Add(materiaCursada);
-            _context.SaveChanges();
+       
         }
     }
-}
+

@@ -78,7 +78,7 @@ namespace AprenderHolandes.Controllers
             {
 
                 materiaCursada.MateriaCursadaId = Guid.NewGuid();
-                materiaCursada.Nombre = materia.Nombre + " - " + (materia.MateriasCursadas.Count + 1) + ", " + DateTime.Now.Year + "- cuatrimestre " + materiaCursada.Cuatrimestre;
+                materiaCursada.Nombre = materia.Nombre + " - " + (materia.MateriasCursadas.Count + 1) + ", " + DateTime.Now.Year ;
                 _context.Add(materiaCursada);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

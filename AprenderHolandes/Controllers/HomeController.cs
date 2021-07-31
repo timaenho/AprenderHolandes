@@ -1,4 +1,6 @@
-﻿using AprenderHolandes.Models;
+﻿using AprenderHolandes.Data;
+using AprenderHolandes.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,15 +14,19 @@ namespace AprenderHolandes.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DbContextInstituto _micontexto;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DbContextInstituto micontexto)
         {
             _logger = logger;
+            _micontexto = micontexto;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var materiasCursadas = _micontexto.MateriaCursadas.Where(mc => mc.Activo);
+
+            return View(materiasCursadas);
         }
 
         public IActionResult Privacy()
