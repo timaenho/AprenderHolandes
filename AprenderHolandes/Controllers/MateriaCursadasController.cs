@@ -68,7 +68,7 @@ namespace AprenderHolandes.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Empleado")]
-        public async Task<IActionResult> Create([Bind("MateriaCursadaId,Nombre,Anio,Cuatrimestre,Activo,MateriaId,ProfesorId")] MateriaCursada materiaCursada)
+        public async Task<IActionResult> Create([Bind("MateriaCursadaId,Nombre,FechaInicio,FechaTermino,Dia,Hora,CantidadHorasPorSemana,Descripcion,Precio,Activo,MateriaId,ProfesorId")] MateriaCursada materiaCursada)
         {
             var materia = _context.Materias.
                 Include(m => m.MateriasCursadas).
@@ -78,7 +78,7 @@ namespace AprenderHolandes.Controllers
             {
 
                 materiaCursada.MateriaCursadaId = Guid.NewGuid();
-                materiaCursada.Nombre = materia.Nombre + " - " + (materia.MateriasCursadas.Count + 1) + ", " + DateTime.Now.Year ;
+                materiaCursada.Nombre = materia.Nombre + " - " + materiaCursada.FechaInicio.ToShortDateString() + " hasta " + materiaCursada.FechaTermino.ToShortDateString() + (" - ") + materiaCursada.Hora;
                 _context.Add(materiaCursada);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -4,17 +4,17 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Crear Grupo</h1>
 
-<h4>MateriaCursada</h4>
+<h4></h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
+                <label hidden asp-for="Nombre" class="control-label"></label>
+                <input hidden asp-for="Nombre" value="empty" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -23,20 +23,20 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="MateriaId" class="control-label"></label>
+                <label asp-for="MateriaId" class="control-label">Materia</label>
                 <select asp-for="MateriaId" class ="form-control" asp-items="ViewBag.MateriaId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="ProfesorId" class="control-label"></label>
-                <select asp-for="ProfesorId" class ="form-control" asp-items="ViewBag.ProfesorId"></select>
+                <label  asp-for="ProfesorId" class="control-label">Profesor</label>
+                <select  asp-for="ProfesorId" class ="form-control"  asp-items="ViewBag.ProfesorId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="FechaInicio" class="control-label"></label>
+                <label asp-for="FechaInicio" class="control-label">Fecha Inicio</label>
                 <input asp-for="FechaInicio" class="form-control" />
                 <span asp-validation-for="FechaInicio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FechaTermino" class="control-label"></label>
+                <label asp-for="FechaTermino" class="control-label">Fecha Fin</label>
                 <input asp-for="FechaTermino" class="form-control" />
                 <span asp-validation-for="FechaTermino" class="text-danger"></span>
             </div>
@@ -51,12 +51,12 @@
                 <span asp-validation-for="Hora" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CantidadHorasPorSemana" class="control-label"></label>
+                <label asp-for="CantidadHorasPorSemana" class="control-label">Cantidad Horas Por Semana</label>
                 <input asp-for="CantidadHorasPorSemana" class="form-control" />
                 <span asp-validation-for="CantidadHorasPorSemana" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
+                <label asp-for="Descripcion" class="control-label">Decripción</label>
                 <input asp-for="Descripcion" class="form-control" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
@@ -66,14 +66,14 @@
                 <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Volver</a>
 </div>
 
 @section Scripts {
