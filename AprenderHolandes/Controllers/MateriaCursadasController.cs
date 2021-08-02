@@ -73,16 +73,23 @@ namespace AprenderHolandes.Controllers
             var materia = _context.Materias.
                 Include(m => m.MateriasCursadas).
                 FirstOrDefault(m => m.MateriaId == materiaCursada.MateriaId);
+            var profesor = _context.Profesores.FirstOrDefault(p => p.Id == materiaCursada.ProfesorId);
 
             if (ModelState.IsValid)
             {
 
                 materiaCursada.MateriaCursadaId = Guid.NewGuid();
                 materiaCursada.Nombre = materia.Nombre + " - " + materiaCursada.FechaInicio.ToShortDateString() + " hasta " + materiaCursada.FechaTermino.ToShortDateString() + (" - ") + materiaCursada.Hora;
+                if (materiaCursada.Activo)
+                {
+                    profesor.MateriasCursadasActivas.Add(materiaCursada);
+                }
+               
                 _context.Add(materiaCursada);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
             ViewData["MateriaId"] = new SelectList(_context.Materias, "MateriaId", "Nombre", materiaCursada.MateriaId);
             ViewData["ProfesorId"] = new SelectList(_context.Profesores, "Id", "Apellido", materiaCursada.ProfesorId);
             return View(materiaCursada);
@@ -113,7 +120,7 @@ namespace AprenderHolandes.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Empleado")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MateriaCursadaId,Nombre,Anio,Cuatrimestre,Activo,MateriaId,ProfesorId")] MateriaCursada materiaCursada)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MateriaCursadaId,Nombre,FechaInicio,FechaTermino,Dia,Hora,CantidadHorasPorSemana,Descripcion,Precio,Activo,MateriaId,ProfesorId")] MateriaCursada materiaCursada)
         {
             if (id != materiaCursada.MateriaCursadaId)
             {
