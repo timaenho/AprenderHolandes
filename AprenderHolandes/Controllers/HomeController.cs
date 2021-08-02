@@ -2,6 +2,7 @@
 using AprenderHolandes.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,10 @@ namespace AprenderHolandes.Controllers
 
         public IActionResult Index()
         {
-            var materiasCursadas = _micontexto.MateriaCursadas.Where(mc => mc.Activo);
+            var materiasCursadas = _micontexto.MateriaCursadas
+                .Include(mc => mc.AlumnoMateriaCursadas)
+                .Include(mc => mc.Materia)
+                .Where(mc => mc.Activo);
 
             return View(materiasCursadas);
         }
