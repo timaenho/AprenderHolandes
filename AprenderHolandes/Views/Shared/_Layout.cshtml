@@ -37,6 +37,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Alumnos" asp-action="MisMaterias">Mis Materias</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Clases" asp-action="Index">Mis Clases</a>
+                                </li>
                             }
                             if (User.IsInRole("Empleado"))
                             {
@@ -54,7 +57,7 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Materias" asp-action="Index">Materias</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="MateriaCursadas" asp-action="Index">Materia Cursada</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="MateriaCursadas" asp-action="Index">Grupos</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Alumnos" asp-action="Index">Alumnos</a>
@@ -72,6 +75,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Profesores" asp-action="MisAlumnos">Mis Alumnos</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Clases" asp-action="Index">Mis Clases</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Profesores" asp-action="MisAlumnos">Mis Alumnos</a>
+                                </li>
 
                             }
 
@@ -79,13 +88,13 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link text-dark"  asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Profesores" asp-action="MostrarProfesores">Nuestros Profesores</a>
+                                <a class="nav-link text-dark"  asp-controller="Home" asp-action="Info">Info</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Carreras" asp-action="MostrarCarreras">Info Carreras</a>
+                                <a class="nav-link text-dark"  asp-controller="Home" asp-action="Contact">Contact</a>
                             </li>
                         }
                     </ul>
