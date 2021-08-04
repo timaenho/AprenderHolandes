@@ -72,8 +72,11 @@ namespace AprenderHolandes.Controllers
         {
             var materia = _context.Materias.
                 Include(m => m.MateriasCursadas).
+            
                 FirstOrDefault(m => m.MateriaId == materiaCursada.MateriaId);
-            var profesor = _context.Profesores.FirstOrDefault(p => p.Id == materiaCursada.ProfesorId);
+            var profesor = _context.Profesores
+                .Include(p => p.MateriasCursadasActivas)
+                .FirstOrDefault(p => p.Id == materiaCursada.ProfesorId);
 
             if (ModelState.IsValid)
             {
@@ -86,6 +89,7 @@ namespace AprenderHolandes.Controllers
                 }
                
                 _context.Add(materiaCursada);
+                _context.Update(profesor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -119,19 +123,51 @@ namespace AprenderHolandes.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Empleado")]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MateriaCursadaId,Nombre,FechaInicio,FechaTermino,Dia,Hora,CantidadHorasPorSemana,Descripcion,Precio,Activo,MateriaId,ProfesorId")] MateriaCursada materiaCursada)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MateriaCursadaId,Nombre,Activo,MateriaId,ProfesorId,FechaInicio,FechaTermino,Dia,Hora,CantidadHorasPorSemana,Descripcion,Precio")] MateriaCursada materiaCursada)
         {
+           
+   
+            
             if (id != materiaCursada.MateriaCursadaId)
             {
                 return NotFound();
             }
+            var materia = _context.Materias.
+            Include(m => m.MateriasCursadas).
+            FirstOrDefault(m => m.MateriaId == materiaCursada.MateriaId);
+            var profesor = _context.Profesores
+                .Include(p => p.MateriasCursadasActivas)
+                .FirstOrDefault(p => p.Id == materiaCursada.ProfesorId);
 
+            materiaCursada.Nombre = materia.Nombre + " - " + materiaCursada.FechaInicio.ToShortDateString() + " hasta " + materiaCursada.FechaTermino.ToShortDateString() + (" - ") + materiaCursada.Hora;
+            if (materiaCursada.Activo)
+            {
+             
+                if (profesor.MateriasCursadasActivas.FirstOrDefault(mc => mc.MateriaCursadaId == materiaCursada.MateriaCursadaId)==null)
+                {
+                    profesor.MateriasCursadasActivas.Add(materiaCursada);
+                }
+              
+            }
+            else
+            {
+                var mcEncontrado = profesor.MateriasCursadasActivas.FirstOrDefault(mc => mc.MateriaCursadaId == materiaCursada.MateriaCursadaId);
+                if (mcEncontrado != null)
+                {
+                    profesor.MateriasCursadasActivas.Remove(materiaCursada);
+                }
+
+            }
             if (ModelState.IsValid)
             {
+               
                 try
                 {
-                    _context.Update(materiaCursada);
+                    var materiaCursadaDB = _context.MateriaCursadas.First(mc => mc.MateriaCursadaId == materiaCursada.MateriaCursadaId);
+                    _context.Entry(materiaCursadaDB).CurrentValues.SetValues(materiaCursada);
+                    var profesorDB = _context.Profesores.First(p => p.Id == profesor.Id);
+                    _context.Entry(profesorDB).CurrentValues.SetValues(profesor);
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -148,7 +184,7 @@ namespace AprenderHolandes.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MateriaId"] = new SelectList(_context.Materias, "MateriaId", "CodigoMateria", materiaCursada.MateriaId);
-            ViewData["ProfesorId"] = new SelectList(_context.Profesores, "Id", "Apellido", materiaCursada.ProfesorId);
+            ViewData["ProfesorId"] = new SelectList(_context.Profesores, "Id", "Discriminator", materiaCursada.ProfesorId);
             return View(materiaCursada);
         }
 

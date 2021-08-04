@@ -48,7 +48,7 @@ namespace AprenderHolandes
 
             services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
                 opciones =>
-                {
+                { 
                     opciones.LoginPath = "/Accounts/IniciarSesion";
                     opciones.AccessDeniedPath = "/Accounts/AccesoDenegado";
                 });

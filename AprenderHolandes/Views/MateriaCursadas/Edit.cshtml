@@ -14,8 +14,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MateriaCursadaId" />
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
+                <label hidden asp-for="Nombre" class="control-label"></label>
+                <input hidden asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -34,32 +34,32 @@
                 <span asp-validation-for="ProfesorId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FechaInicio" class="control-label"></label>
-                <input asp-for="FechaInicio" class="form-control" />
+                <label  asp-for="FechaInicio" class="control-label">Fecha Inicio</label>
+                <input  asp-for="FechaInicio" class="form-control" />
                 <span asp-validation-for="FechaInicio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FechaTermino" class="control-label"></label>
+                <label asp-for="FechaTermino" class="control-label">Fecha Termino</label>
                 <input asp-for="FechaTermino" class="form-control" />
                 <span asp-validation-for="FechaTermino" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Dia" class="control-label"></label>
+                <label asp-for="Dia" class="control-label">Dia</label>
                 <input asp-for="Dia" class="form-control" />
                 <span asp-validation-for="Dia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Hora" class="control-label"></label>
+                <label asp-for="Hora" class="control-label">Hora</label>
                 <input asp-for="Hora" class="form-control" />
                 <span asp-validation-for="Hora" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CantidadHorasPorSemana" class="control-label"></label>
+                <label asp-for="CantidadHorasPorSemana" class="control-label">Cantidad Horas Por Semana</label>
                 <input asp-for="CantidadHorasPorSemana" class="form-control" />
                 <span asp-validation-for="CantidadHorasPorSemana" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
+                <label asp-for="Descripcion" class="control-label">Descripción</label>
                 <input asp-for="Descripcion" class="form-control" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
