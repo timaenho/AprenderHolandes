@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AprenderHolandes.Data;
 using AprenderHolandes.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace AprenderHolandes.Controllers
 {
@@ -15,10 +16,12 @@ namespace AprenderHolandes.Controllers
     public class MateriaCursadasController : Controller
     {
         private readonly DbContextInstituto _context;
+        private readonly UserManager<Persona> _usermanager;
 
-        public MateriaCursadasController(DbContextInstituto context)
+        public MateriaCursadasController(DbContextInstituto context, UserManager<Persona> usermanager)
         {
             _context = context;
+            _usermanager = usermanager;
         }
 
         // GET: MateriaCursadas
@@ -31,6 +34,9 @@ namespace AprenderHolandes.Controllers
 
         // GET: MateriaCursadas/Details/5
 
+        
+    
+        
 
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -54,7 +60,7 @@ namespace AprenderHolandes.Controllers
         }
 
         // GET: MateriaCursadas/Create
-        [Authorize(Roles = "Empleado")]
+        [Authorize(Roles = "Empleado,Profesor")]
         public IActionResult Create()
         {
             ViewData["MateriaId"] = new SelectList(_context.Materias, "MateriaId", "Nombre");
@@ -67,7 +73,7 @@ namespace AprenderHolandes.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Empleado")]
+        [Authorize(Roles = "Empleado,Profesor")]
         public async Task<IActionResult> Create([Bind("MateriaCursadaId,Nombre,FechaInicio,FechaTermino,Dia,Hora,CantidadHorasPorSemana,Descripcion,Precio,Activo,MateriaId,ProfesorId")] MateriaCursada materiaCursada)
         {
             var materia = _context.Materias.
@@ -100,7 +106,7 @@ namespace AprenderHolandes.Controllers
         }
 
         // GET: MateriaCursadas/Edit/5
-        [Authorize(Roles = "Empleado")]
+        [Authorize(Roles = "Empleado,Profesor")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -122,6 +128,7 @@ namespace AprenderHolandes.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Empleado,Profesor")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("MateriaCursadaId,Nombre,Activo,MateriaId,ProfesorId,FechaInicio,FechaTermino,Dia,Hora,CantidadHorasPorSemana,Descripcion,Precio")] MateriaCursada materiaCursada)
         {

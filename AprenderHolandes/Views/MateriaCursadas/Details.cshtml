@@ -1,0 +1,74 @@
+﻿@model AprenderHolandes.Models.MateriaCursada
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Grupo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Activo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Profesor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Profesor.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.Raw("Horas por semana")
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CantidadHorasPorSemana)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+    </dl>
+</div>
+<hr />
+<h4>Alumnos</h4>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.Raw("Nombre")
+        </dt>
+        <dt class="col-sm-2">
+            @Html.Raw("Email")
+        </dt>
+
+
+        @foreach (AlumnoMateriaCursada amc in Model.AlumnoMateriaCursadas)
+        {
+
+
+            <dd class="col-sm-10">
+                @(amc.Alumno.Nombre)
+            </dd>
+            <dd class="col-sm-10">
+                @(amc.Alumno.Email)
+            </dd>
+        }
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MateriaCursadaId">Edit</a> |
+    <a asp-action="Index">Volver</a>
+</div>
