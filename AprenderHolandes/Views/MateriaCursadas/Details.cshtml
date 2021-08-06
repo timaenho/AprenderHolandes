@@ -46,29 +46,32 @@
 <h4>Alumnos</h4>
 <div>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.Raw("Nombre")
-        </dt>
-        <dt class="col-sm-2">
-            @Html.Raw("Email")
-        </dt>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.Raw("Nombre")
+                </th>
+                <th>
+                    @Html.Raw("Email")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var amc in Model.AlumnoMateriaCursadas)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => amc.Alumno.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => amc.Alumno.Email)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-
-        @foreach (AlumnoMateriaCursada amc in Model.AlumnoMateriaCursadas)
-        {
-
-
-            <dd class="col-sm-10">
-                @(amc.Alumno.Nombre)
-            </dd>
-            <dd class="col-sm-10">
-                @(amc.Alumno.Email)
-            </dd>
-        }
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.MateriaCursadaId">Edit</a> |
-    <a asp-action="Index">Volver</a>
-</div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.MateriaCursadaId">Editar</a> 
+    </div>

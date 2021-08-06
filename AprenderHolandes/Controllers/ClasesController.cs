@@ -50,7 +50,7 @@ namespace AprenderHolandes.Controllers
         public IActionResult Create()
         {
             ViewData["MateriaCursadaId"] = new SelectList(_context.MateriaCursadas, "MateriaCursadaId", "Nombre");
-            ViewData["ProfesorId"] = new SelectList(_context.Profesores, "Id", "Discriminator");
+            ViewData["ProfesorId"] = new SelectList(_context.Profesores, "Id", "Nombre");
             return View();
         }
 
