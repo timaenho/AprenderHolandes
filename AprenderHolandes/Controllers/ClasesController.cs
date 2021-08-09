@@ -7,22 +7,30 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprenderHolandes.Data;
 using AprenderHolandes.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace AprenderHolandes.Controllers
 {
     public class ClasesController : Controller
     {
         private readonly DbContextInstituto _context;
+        private readonly UserManager<Persona> _userManager;
 
-        public ClasesController(DbContextInstituto context)
+        public ClasesController(DbContextInstituto context, UserManager<Persona> usermanager)
         {
             _context = context;
+            _userManager = usermanager;
         }
 
         // GET: Clases
+        // index profesor
         public async Task<IActionResult> Index()
         {
-            var dbContextInstituto = _context.Clases.Include(c => c.MateriaCursada).Include(c => c.Profesor);
+
+            Persona profesor =(Profesor) await _userManager.GetUserAsync(HttpContext.User);
+                var dbContextInstituto = _context.Clases.Include(c => c.MateriaCursada)
+               .Where(c => c.ProfesorId == profesor.Id && c.Fecha > DateTime.Now)
+               .Include(c => c.Profesor).OrderBy(c =>c.Fecha);
             return View(await dbContextInstituto.ToListAsync());
         }
 

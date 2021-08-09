@@ -1,4 +1,5 @@
-﻿@model IEnumerable<AprenderHolandes.Models.Clase>
+﻿@inject SignInManager<Persona> SignInManager
+@model IEnumerable<AprenderHolandes.Models.Clase>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,10 +23,10 @@
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Link)
+                @Html.DisplayNameFor(model => model.Profesor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Profesor)
+              
             </th>
             <th></th>
         </tr>
@@ -43,15 +44,20 @@
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
             <td>
-                <a href="@item.Link">Empezar la clase </a>
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Profesor.Nombre)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> 
+                <a href="@item.Link">Empezar la clase </a>
             </td>
+            @if (User.IsInRole("Profesor"))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+                </td>
+
+            }
+
         </tr>
 }
     </tbody>
