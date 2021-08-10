@@ -24,16 +24,24 @@ namespace AprenderHolandes.Controllers
 
         public async Task<IActionResult> IndexAlumno()
         {
-            Alumno alumno = (Alumno)await _userManager.GetUserAsync(HttpContext.User);
-            if(alumno == null)
+            Alumno al = (Alumno)await _userManager.GetUserAsync(HttpContext.User);
+            if(al == null)
             {
                 return NotFound();
             }
+            var clases = new List<Clase>();
+            var alumno = _context.Alumnos
+                .Include(a=> a.AlumnosMateriasCursadas)
+                .ThenInclude(amc => amc.MateriaCursada)
+                .ThenInclude(mc => mc.Clases)
+                .FirstOrDefault(a => a.Id == al.Id);
 
-           
+            foreach(AlumnoMateriaCursada amc in alumno.AlumnosMateriasCursadas)
+            {
+                clases.AddRange(amc.MateriaCursada.Clases);
+            }
 
-
-            return View(await clases.ToListAsync());
+            return View(clases);
         } 
         public async Task<IActionResult> Index()
         {
