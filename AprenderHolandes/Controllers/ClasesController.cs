@@ -22,8 +22,19 @@ namespace AprenderHolandes.Controllers
             _userManager = usermanager;
         }
 
-        // GET: Clases
-        // index profesor
+        public async Task<IActionResult> IndexAlumno()
+        {
+            Alumno alumno = (Alumno)await _userManager.GetUserAsync(HttpContext.User);
+            if(alumno == null)
+            {
+                return NotFound();
+            }
+
+           
+
+
+            return View(await clases.ToListAsync());
+        } 
         public async Task<IActionResult> Index()
         {
 
