@@ -34,6 +34,7 @@ namespace AprenderHolandes.Controllers
                 .Include(a=> a.AlumnosMateriasCursadas)
                 .ThenInclude(amc => amc.MateriaCursada)
                 .ThenInclude(mc => mc.Clases)
+                .ThenInclude(c=> c.Profesor)
                 .FirstOrDefault(a => a.Id == al.Id);
 
             foreach(AlumnoMateriaCursada amc in alumno.AlumnosMateriasCursadas)
@@ -41,7 +42,9 @@ namespace AprenderHolandes.Controllers
                 clases.AddRange(amc.MateriaCursada.Clases);
             }
 
-            return View(clases);
+            return View("Index",clases
+                .OrderBy(c=> c.Fecha)
+                .Where(c=> c.Fecha > DateTime.Now));
         } 
         public async Task<IActionResult> Index()
         {

@@ -6,10 +6,13 @@
 }
 
 <h1>Mis Clases</h1>
+@if (User.IsInRole("Profesor"))
+{
+    <p>
+        <a asp-action="Create">Crear</a>
+    </p>
+}
 
-<p>
-    <a asp-action="Create">Crear</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -26,39 +29,40 @@
                 @Html.DisplayNameFor(model => model.Profesor)
             </th>
             <th>
-              
+
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MateriaCursada.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Profesor.Nombre)
-            </td>
-            <td>
-                <a href="@item.Link">Empezar la clase </a>
-            </td>
-            @if (User.IsInRole("Profesor"))
-            {
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+                    @Html.DisplayFor(modelItem => item.Fecha)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MateriaCursada.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Profesor.Nombre)
+                </td>
+                <td>
+                    <a href="@item.Link">Empezar la clase </a>
+                </td>
+                @if (User.IsInRole("Profesor"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+                    </td>
 
-            }
+                }
 
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>
