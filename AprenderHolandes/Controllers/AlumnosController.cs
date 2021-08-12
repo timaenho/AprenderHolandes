@@ -624,6 +624,7 @@ namespace AprenderHolandes.Controllers
         }
         public async Task <IActionResult> ContenidoIndex()
         {
+            //el estudiante sole puede tener una materiacursada activa
             var alumnoid = Guid.Parse(_userManager.GetUserId(User));
             var alumno = _context.Alumnos
                 .Include(a=>a.Carrera)
@@ -633,12 +634,56 @@ namespace AprenderHolandes.Controllers
                 .FirstOrDefault(a => a.Id == alumnoid);
             var amcs = alumno.AlumnosMateriasCursadas;
             var listMC = new List<MateriaCursada>();
-            foreach(AlumnoMateriaCursada amcAct in amcs)
+            MateriaCursada mcActivo = null;
+
+            var nivel1 = "Nivel 1";
+            var nivel2 = "Nivel 2";
+            var nivel3 = "Nivel 3";
+            var nivel4 = "Nivel 4";
+            var nivel5 = "Nivel 5";
+            var nivel6 = "Nivel 6";
+
+            var holandes = "Holandes";
+
+
+            foreach (AlumnoMateriaCursada amcAct in amcs)
             {
-                listMC.Add(amcAct.MateriaCursada);
+                if (amcAct.MateriaCursada.Activo)
+                {
+                     mcActivo = amcAct.MateriaCursada;
+                }
+             
             }
-            ViewData["AlumnoCarrera"] = alumno.Carrera.Nombre;
-            return View(listMC.OrderBy(mc => mc.Nombre));
+
+           
+            if (mcActivo.Materia.Nombre == nivel1 && alumno.Carrera.Nombre == holandes)
+            {
+                return View("IndexHolandesNivel1");
+            }
+            if (mcActivo.Materia.Nombre == nivel2 && alumno.Carrera.Nombre == holandes)
+            {
+                return View("IndexHolandesNivel2");
+            }
+            if (mcActivo.Materia.Nombre == nivel3 && alumno.Carrera.Nombre == holandes)
+            {
+                return View("IndexHolandesNivel3");
+            }
+            if (mcActivo.Materia.Nombre == nivel4 && alumno.Carrera.Nombre == holandes)
+            {
+                return View("IndexHolandesNivel4");
+            }
+            if (mcActivo.Materia.Nombre == nivel5 && alumno.Carrera.Nombre == holandes)
+            {
+                return View("IndexHolandesNivel5");
+            }
+            if (mcActivo.Materia.Nombre == nivel6 && alumno.Carrera.Nombre == holandes)
+            {
+                return View("IndexHolandesNivel6");
+            }
+
+            return View("Accounts", "Acceso Denegado");
         }
     }
+
+
 }
