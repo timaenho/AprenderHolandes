@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AprenderHolandes.Models.MateriaCursada>
+
+@{
+    ViewData["Title"] = "ContenidoIndex";
+    Layout = "ContenidoIndex";
+}
+
+<h1>ContenidoIndex</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @if (ViewData["AlumnoCarrera"].ToString() == "Holandes")
+            {
+
+            }
+                @Html.DisplayNameFor(model => model.Materia)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Materia.Nombre)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

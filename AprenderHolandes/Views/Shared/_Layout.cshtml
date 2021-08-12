@@ -40,6 +40,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Clases" asp-action="IndexAlumno">Mis Clases</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Alumnos" asp-action="ContenidoHolandesIndex">Contenido</a>
+                                </li>
                             }
                             if (User.IsInRole("Empleado"))
                             {
@@ -88,13 +91,13 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark"  asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark"  asp-controller="Home" asp-action="Info">Info</a>
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Info">Info</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark"  asp-controller="Home" asp-action="Contact">Contact</a>
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Contact">Contact</a>
                             </li>
                         }
                     </ul>

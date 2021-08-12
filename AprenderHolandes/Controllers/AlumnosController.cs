@@ -622,5 +622,23 @@ namespace AprenderHolandes.Controllers
             }
             return View(amcInActivos);
         }
+        public async Task <IActionResult> ContenidoIndex()
+        {
+            var alumnoid = Guid.Parse(_userManager.GetUserId(User));
+            var alumno = _context.Alumnos
+                .Include(a=>a.Carrera)
+                .Include(a => a.AlumnosMateriasCursadas)
+                .ThenInclude(amc => amc.MateriaCursada)
+                .ThenInclude(mc => mc.Materia)
+                .FirstOrDefault(a => a.Id == alumnoid);
+            var amcs = alumno.AlumnosMateriasCursadas;
+            var listMC = new List<MateriaCursada>();
+            foreach(AlumnoMateriaCursada amcAct in amcs)
+            {
+                listMC.Add(amcAct.MateriaCursada);
+            }
+            ViewData["AlumnoCarrera"] = alumno.Carrera.Nombre;
+            return View(listMC.OrderBy(mc => mc.Nombre));
+        }
     }
 }
