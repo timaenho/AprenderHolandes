@@ -643,7 +643,7 @@ namespace AprenderHolandes.Controllers
             var nivel5 = "Nivel 5";
             var nivel6 = "Nivel 6";
 
-            var holandes = "Holandes";
+            var holandes = "Holandés";
 
 
             foreach (AlumnoMateriaCursada amcAct in amcs)
@@ -683,6 +683,8 @@ namespace AprenderHolandes.Controllers
 
             return View("Accounts", "Acceso Denegado");
         }
+
+
     }
 
 
