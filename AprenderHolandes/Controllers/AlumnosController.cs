@@ -655,7 +655,6 @@ namespace AprenderHolandes.Controllers
              
             }
 
-           
             if (mcActivo.Materia.Nombre == nivel1 && alumno.Carrera.Nombre == holandes)
             {
                 return View("IndexHolandesNivel1");
@@ -681,11 +680,12 @@ namespace AprenderHolandes.Controllers
                 return View("IndexHolandesNivel6");
             }
 
-            return View("Accounts", "Acceso Denegado");
+            return View("AccesoDenegado", "Accounts");
         }
 
-
+    
     }
+
 
 
 }
