@@ -683,7 +683,49 @@ namespace AprenderHolandes.Controllers
             return View("AccesoDenegado", "Accounts");
         }
 
-    
+
+        #region Holandes Nivel 1
+        public IActionResult HolandesNivel1Clase1()
+        {
+            return View();
+        }
+        public IActionResult HolandesNivel1Clase2()
+        {
+            return View();
+        }
+        public IActionResult HolandesNivel1Clase3()
+        {
+            return View();
+        }
+        public IActionResult HolandesNivel1Clase4()
+        {
+            return View();
+        }
+        public IActionResult HolandesNivel1Clase5()
+        {
+            return View();
+        }
+        public IActionResult HolandesNivel1Clase6()
+        {
+            return View();
+        }
+        public IActionResult HolandesNivel1Clase7()
+        {
+            return View();
+        }
+        public IActionResult HolandesNivel1Clase8()
+        {
+            return View();
+        }
+        public IActionResult HolandesNivel1Clase9()
+        {
+            return View();
+        }
+
+        //....
+        #endregion
+
+
     }
 
 
