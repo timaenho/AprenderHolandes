@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprenderHolandes.Data;
 using AprenderHolandes.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace AprenderHolandes.Controllers
 {
     public class EvaluacionesController : Controller
     {
         private readonly DbContextInstituto _context;
+        private readonly UserManager<Persona> _userManager;
 
-        public EvaluacionesController(DbContextInstituto context)
+        public EvaluacionesController(DbContextInstituto context, UserManager<Persona> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Evaluaciones
@@ -44,8 +47,11 @@ namespace AprenderHolandes.Controllers
         }
 
         // GET: Evaluaciones/Create
-        public IActionResult Create()
+        public async Task<IActionResult>Create()
         {
+            Profesor profesor = (Profesor)await _userManager.GetUserAsync(HttpContext.User);
+            ViewData["MateriaId"] = new SelectList(_context.Materias, "Id", "Nombre");
+            ViewData["Profesor"] = profesor;
             return View();
         }
 
