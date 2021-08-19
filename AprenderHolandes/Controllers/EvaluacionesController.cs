@@ -50,8 +50,8 @@ namespace AprenderHolandes.Controllers
         public async Task<IActionResult>Create()
         {
             Profesor profesor = (Profesor)await _userManager.GetUserAsync(HttpContext.User);
-            ViewData["MateriaId"] = new SelectList(_context.Materias, "Id", "Nombre");
-            ViewData["Profesor"] = profesor;
+            ViewData["MateriaId"] = new SelectList(_context.Materias, "MateriaId", "Nombre");
+            ViewData["ProfesorId"] = profesor.Id;
             return View();
         }
 
