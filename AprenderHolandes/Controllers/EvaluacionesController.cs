@@ -60,7 +60,7 @@ namespace AprenderHolandes.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,Descripcion")] Evaluacion evaluacion)
+        public async Task<IActionResult> Create([Bind("Id,Titulo,Descripcion, ProfesorId,MateriaId ")] Evaluacion evaluacion)
         {
             if (ModelState.IsValid)
             {
@@ -75,6 +75,7 @@ namespace AprenderHolandes.Controllers
         // GET: Evaluaciones/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
+            Profesor profesor = (Profesor) await _userManager.GetUserAsync(HttpContext.User);
             if (id == null)
             {
                 return NotFound();
@@ -85,6 +86,8 @@ namespace AprenderHolandes.Controllers
             {
                 return NotFound();
             }
+            ViewData["MateriaId"] = new SelectList(_context.Materias, "MateriaId", "Nombre");
+            ViewData["ProfesorId"] = profesor.Id;
             return View(evaluacion);
         }
 
@@ -93,7 +96,7 @@ namespace AprenderHolandes.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Titulo,Descripcion")] Evaluacion evaluacion)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Titulo,Descripcion, ProfesorId, MateriaId")] Evaluacion evaluacion)
         {
             if (id != evaluacion.Id)
             {
@@ -104,6 +107,8 @@ namespace AprenderHolandes.Controllers
             {
                 try
                 {
+                    
+
                     _context.Update(evaluacion);
                     await _context.SaveChangesAsync();
                 }
