@@ -63,12 +63,22 @@ namespace AprenderHolandes.Controllers
         {
             var materiaCursada = _context.MateriaCursadas
                 .Include(mc => mc.MateriaCursadaEvaluaciones)
+                .ThenInclude(mce => mce.Evaluacion)
                 .FirstOrDefault(mc => mc.MateriaCursadaId == materiaCursadaEvaluacion.MateriaCursadaId)
                 ;
             
             if (ModelState.IsValid)
             {
                 materiaCursadaEvaluacion.MateriaCursadaId = Guid.NewGuid();
+                if(materiaCursada.MateriaCursadaEvaluaciones
+                    .FirstOrDefault(mce => mce.EvaluacionId == materiaCursadaEvaluacion.EvaluacionId) != null)
+                {
+                    ViewData["EvaluacionId"] = new SelectList(_context.Evaluaciones, "Id", "Titulo", materiaCursadaEvaluacion.EvaluacionId);
+                    ViewData["MateriaCursadaId"] = new SelectList(_context.MateriaCursadas, "MateriaCursadaId", "Nombre", materiaCursadaEvaluacion.MateriaCursadaId);
+                    ViewData["Mensaje"] = "Este grupo ya tiene esta evaluación asignada";
+                    return View(materiaCursadaEvaluacion);
+                   
+                }
                 materiaCursada.MateriaCursadaEvaluaciones.Add(materiaCursadaEvaluacion);
                 _context.Add(materiaCursadaEvaluacion);
                 _context.Update(materiaCursada);
@@ -82,14 +92,14 @@ namespace AprenderHolandes.Controllers
         }
 
         // GET: MateriaCursadaEvaluacions/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid? Id)
         {
-            if (id == null)
+            if (Id == null)
             {
                 return NotFound();
             }
 
-            var materiaCursadaEvaluacion = await _context.MateriaCursadaEvaluaciones.FindAsync(id);
+            var materiaCursadaEvaluacion =  _context.MateriaCursadaEvaluaciones.FirstOrDefault(mce => mce.Id == Id);
             if (materiaCursadaEvaluacion == null)
             {
                 return NotFound();
