@@ -49,7 +49,7 @@ namespace AprenderHolandes.Controllers
         // GET: MateriaCursadaEvaluacions/Create
         public IActionResult Create()
         {
-            ViewData["EvaluacionId"] = new SelectList(_context.Evaluaciones, "Id", "Descripcion");
+            ViewData["EvaluacionId"] = new SelectList(_context.Evaluaciones, "Id", "Titulo");
             ViewData["MateriaCursadaId"] = new SelectList(_context.MateriaCursadas, "MateriaCursadaId", "Nombre");
             return View();
         }
@@ -61,14 +61,22 @@ namespace AprenderHolandes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,EvaluacionId,MateriaCursadaId,Activo")] MateriaCursadaEvaluacion materiaCursadaEvaluacion)
         {
+            var materiaCursada = _context.MateriaCursadas
+                .Include(mc => mc.MateriaCursadaEvaluaciones)
+                .FirstOrDefault(mc => mc.MateriaCursadaId == materiaCursadaEvaluacion.MateriaCursadaId)
+                ;
+            
             if (ModelState.IsValid)
             {
                 materiaCursadaEvaluacion.MateriaCursadaId = Guid.NewGuid();
+                materiaCursada.MateriaCursadaEvaluaciones.Add(materiaCursadaEvaluacion);
                 _context.Add(materiaCursadaEvaluacion);
+                _context.Update(materiaCursada);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EvaluacionId"] = new SelectList(_context.Evaluaciones, "Id", "Descripcion", materiaCursadaEvaluacion.EvaluacionId);
+
+            ViewData["EvaluacionId"] = new SelectList(_context.Evaluaciones, "Id", "Titulo", materiaCursadaEvaluacion.EvaluacionId);
             ViewData["MateriaCursadaId"] = new SelectList(_context.MateriaCursadas, "MateriaCursadaId", "Nombre", materiaCursadaEvaluacion.MateriaCursadaId);
             return View(materiaCursadaEvaluacion);
         }
@@ -86,7 +94,7 @@ namespace AprenderHolandes.Controllers
             {
                 return NotFound();
             }
-            ViewData["EvaluacionId"] = new SelectList(_context.Evaluaciones, "Id", "Descripcion", materiaCursadaEvaluacion.EvaluacionId);
+            ViewData["EvaluacionId"] = new SelectList(_context.Evaluaciones, "Id", "Titulo", materiaCursadaEvaluacion.EvaluacionId);
             ViewData["MateriaCursadaId"] = new SelectList(_context.MateriaCursadas, "MateriaCursadaId", "Nombre", materiaCursadaEvaluacion.MateriaCursadaId);
             return View(materiaCursadaEvaluacion);
         }
@@ -123,7 +131,7 @@ namespace AprenderHolandes.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EvaluacionId"] = new SelectList(_context.Evaluaciones, "Id", "Descripcion", materiaCursadaEvaluacion.EvaluacionId);
+            ViewData["EvaluacionId"] = new SelectList(_context.Evaluaciones, "Id", "Titulo", materiaCursadaEvaluacion.EvaluacionId);
             ViewData["MateriaCursadaId"] = new SelectList(_context.MateriaCursadas, "MateriaCursadaId", "Nombre", materiaCursadaEvaluacion.MateriaCursadaId);
             return View(materiaCursadaEvaluacion);
         }
