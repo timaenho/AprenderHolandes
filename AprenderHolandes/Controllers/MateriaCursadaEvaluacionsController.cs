@@ -91,15 +91,15 @@ namespace AprenderHolandes.Controllers
             return View(materiaCursadaEvaluacion);
         }
 
-        // GET: MateriaCursadaEvaluacions/Edit/5
-        public async Task<IActionResult> Edit(Guid? Id)
+        //GET: MateriaCursadaEvaluacions/Edit/5
+        public IActionResult Edit(Guid? EvaluacionId, Guid? MateriaCursadaId)
         {
-            if (Id == null)
+            if (MateriaCursadaId == null || EvaluacionId == null)
             {
                 return NotFound();
             }
 
-            var materiaCursadaEvaluacion =  _context.MateriaCursadaEvaluaciones.FirstOrDefault(mce => mce.Id == Id);
+            var materiaCursadaEvaluacion =  _context.MateriaCursadaEvaluaciones.FirstOrDefault(mce => mce.MateriaCursadaId == MateriaCursadaId&&mce.EvaluacionId == EvaluacionId);
             if (materiaCursadaEvaluacion == null)
             {
                 return NotFound();
@@ -109,7 +109,7 @@ namespace AprenderHolandes.Controllers
             return View(materiaCursadaEvaluacion);
         }
 
-        // POST: MateriaCursadaEvaluacions/Edit/5
+        //POST: MateriaCursadaEvaluacions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]

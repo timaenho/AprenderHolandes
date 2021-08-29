@@ -4,14 +4,16 @@ using AprenderHolandes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprenderHolandes.Migrations
 {
     [DbContext(typeof(DbContextInstituto))]
-    partial class DbContextInstitutoModelSnapshot : ModelSnapshot
+    [Migration("20210829001758_withkey")]
+    partial class withkey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +51,13 @@ namespace AprenderHolandes.Migrations
                     b.Property<Guid>("AlumnoId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("MateriaCursadaEvaluacionEvaluacionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("MateriaCursadaEvaluacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("MateriaCursadaEvaluacionMateriaCursadaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nota")
@@ -63,9 +71,9 @@ namespace AprenderHolandes.Migrations
 
                     b.HasIndex("AlumnoId");
 
-                    b.HasIndex("MateriaCursadaEvaluacionId");
-
                     b.HasIndex("ProfesorId");
+
+                    b.HasIndex("MateriaCursadaEvaluacionMateriaCursadaId", "MateriaCursadaEvaluacionEvaluacionId");
 
                     b.ToTable("AlumnoMateriaCursadaEvaluaciondaNotas");
                 });
@@ -264,24 +272,18 @@ namespace AprenderHolandes.Migrations
 
             modelBuilder.Entity("AprenderHolandes.Models.MateriaCursadaEvaluacion", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("MateriaCursadaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EvaluacionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Activo")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("EvaluacionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MateriaCursadaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
+                    b.HasKey("MateriaCursadaId", "EvaluacionId");
 
                     b.HasIndex("EvaluacionId");
-
-                    b.HasIndex("MateriaCursadaId");
 
                     b.ToTable("MateriaCursadaEvaluaciones");
                 });
@@ -601,17 +603,15 @@ namespace AprenderHolandes.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AprenderHolandes.Models.MateriaCursadaEvaluacion", "MateriaCursadaEvaluacion")
-                        .WithMany("AlumnoMateriaCursadaEvaluaciondaNotas")
-                        .HasForeignKey("MateriaCursadaEvaluacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AprenderHolandes.Models.Profesor", "Profesor")
                         .WithMany()
                         .HasForeignKey("ProfesorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("AprenderHolandes.Models.MateriaCursadaEvaluacion", "MateriaCursadaEvaluacion")
+                        .WithMany("AlumnoMateriaCursadaEvaluaciondaNotas")
+                        .HasForeignKey("MateriaCursadaEvaluacionMateriaCursadaId", "MateriaCursadaEvaluacionEvaluacionId");
                 });
 
             modelBuilder.Entity("AprenderHolandes.Models.Calificacion", b =>

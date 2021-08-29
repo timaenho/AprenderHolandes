@@ -56,20 +56,20 @@ namespace AprenderHolandes.Data
 
             #endregion
 
-            #region N:M MateriaCursada Evaluación --> MateriaCursadaEvaluación 
-            modelbuilder.Entity<MateriaCursadaEvaluacion>()
-                    .HasKey(mce => new { mce.MateriaCursadaId, mce.EvaluacionId });
+            //#region N:M MateriaCursada Evaluación --> MateriaCursadaEvaluación 
+            //modelbuilder.Entity<MateriaCursadaEvaluacion>()
+            //        .HasKey(mce => new { mce.MateriaCursadaId, mce.EvaluacionId });
 
-            modelbuilder.Entity<MateriaCursadaEvaluacion>()
-                .HasOne(ma => ma.MateriaCursada)
-                .WithMany(a => a.MateriaCursadaEvaluaciones)
-                .HasForeignKey(ma => ma.MateriaCursadaId);
+            //modelbuilder.Entity<MateriaCursadaEvaluacion>()
+            //    .HasOne(ma => ma.MateriaCursada)
+            //    .WithMany(a => a.MateriaCursadaEvaluaciones)
+            //    .HasForeignKey(ma => ma.MateriaCursadaId);
 
-            modelbuilder.Entity<MateriaCursadaEvaluacion>()
-                .HasOne(ma => ma.Evaluacion)
-                .WithMany(m => m.MateriaCursadaEvaluaciones)
-                .HasForeignKey(ma => ma.EvaluacionId);
-            #endregion
+            //modelbuilder.Entity<MateriaCursadaEvaluacion>()
+            //    .HasOne(ma => ma.Evaluacion)
+            //    .WithMany(m => m.MateriaCursadaEvaluaciones)
+            //    .HasForeignKey(ma => ma.EvaluacionId);
+            //#endregion
 
             //#region N:M MateriaCursadaEvaluacion Alumno --> AlumnoMateriaCursadaEvaluacionNota
             //modelbuilder.Entity<AlumnoMateriaCursadaEvaluaciondaNota>()
