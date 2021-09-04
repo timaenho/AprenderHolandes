@@ -7,22 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprenderHolandes.Data;
 using AprenderHolandes.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace AprenderHolandes.Controllers
 {
     public class MateriaCursadaEvaluacionsController : Controller
     {
         private readonly DbContextInstituto _context;
+        private readonly UserManager<Persona> _usermanager;
 
-        public MateriaCursadaEvaluacionsController(DbContextInstituto context)
+
+        public MateriaCursadaEvaluacionsController(DbContextInstituto context, UserManager<Persona> userManager)
         {
             _context = context;
+            _usermanager = userManager;
         }
 
         // GET: MateriaCursadaEvaluacions
         public async Task<IActionResult> Index()
         {
-            var dbContextInstituto = _context.MateriaCursadaEvaluaciones.Include(m => m.Evaluacion).Include(m => m.MateriaCursada);
+            var dbContextInstituto = _context.MateriaCursadaEvaluaciones.Include(m => m.Evaluacion).Include(m => m.MateriaCursada)
+                .OrderBy(mce => mce.MateriaCursadaId);
             return View(await dbContextInstituto.ToListAsync());
         }
 
@@ -92,14 +97,14 @@ namespace AprenderHolandes.Controllers
         }
 
         //GET: MateriaCursadaEvaluacions/Edit/5
-        public IActionResult Edit(Guid? EvaluacionId, Guid? MateriaCursadaId)
+        public IActionResult Edit(Guid? Id)
         {
-            if (MateriaCursadaId == null || EvaluacionId == null)
+            if (Id == null)
             {
                 return NotFound();
             }
 
-            var materiaCursadaEvaluacion =  _context.MateriaCursadaEvaluaciones.FirstOrDefault(mce => mce.MateriaCursadaId == MateriaCursadaId&&mce.EvaluacionId == EvaluacionId);
+            var materiaCursadaEvaluacion =  _context.MateriaCursadaEvaluaciones.FirstOrDefault(mce => mce.Id == Id);
             if (materiaCursadaEvaluacion == null)
             {
                 return NotFound();
@@ -116,7 +121,7 @@ namespace AprenderHolandes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,EvaluacionId,MateriaCursadaId,Activo")] MateriaCursadaEvaluacion materiaCursadaEvaluacion)
         {
-            if (id != materiaCursadaEvaluacion.MateriaCursadaId)
+            if (id != materiaCursadaEvaluacion.Id)
             {
                 return NotFound();
             }
@@ -130,7 +135,7 @@ namespace AprenderHolandes.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MateriaCursadaEvaluacionExists(materiaCursadaEvaluacion.MateriaCursadaId))
+                    if (!MateriaCursadaEvaluacionExists(materiaCursadaEvaluacion.Id))
                     {
                         return NotFound();
                     }
@@ -181,5 +186,20 @@ namespace AprenderHolandes.Controllers
         {
             return _context.MateriaCursadaEvaluaciones.Any(e => e.MateriaCursadaId == id);
         }
+        [HttpGet]
+        public async Task<IActionResult> ListaMateriaCursadas()
+        {
+            Profesor profesor = (Profesor)await _usermanager.GetUserAsync(HttpContext.User);
+            var listaMateriaCursadas = _context.MateriaCursadas
+                .Include(mc => mc.Materia)
+                .FirstOrDefault(mc => mc.ProfesorId == profesor.Id);
+            return View(listaMateriaCursadas);
+        }
+
+       
+
+
     }
+
+   
 }

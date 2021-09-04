@@ -1,19 +1,14 @@
 ﻿@model IEnumerable<AprenderHolandes.Models.MateriaCursadaEvaluacion>
 
 @{
-    Layout = _Layout;
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<h1>Index</h1>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear</a>
 </p>
 <table class="table">
     <thead>
@@ -22,7 +17,7 @@
                 @Html.DisplayNameFor(model => model.Evaluacion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MateriaCursada)
+                @Html.Raw("Grupo")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Activo)
@@ -34,22 +29,20 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Evaluacion.Descripcion)
+                @Html.DisplayFor(modelItem => item.Evaluacion.Titulo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MateriaCursada.Descripcion)
+                @Html.DisplayFor(modelItem => item.MateriaCursada.Nombre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Activo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
-</body>
-</html>

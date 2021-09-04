@@ -2,12 +2,13 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="bg-warning">@ViewData["Mensaje"]</div>
 <h1>Crear</h1>
 
-<h4>Evaluacion por grupo</h4>
+<h4>Evaluación por grupo</h4>
+<div class="bg-danger"> @ViewData["Mensaje"] </div>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,7 +16,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="EvaluacionId" class="control-label">Evaluación</label>
-                <select asp-for="EvaluacionId" class ="form-control" asp-items="ViewBag.EvaluacionId">Grupo</select>
+                <select asp-for="EvaluacionId" class ="form-control" asp-items="ViewBag.EvaluacionId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="MateriaCursadaId" class="control-label">Grupo</label>
@@ -37,6 +38,3 @@
     <a asp-action="Index">Volver</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

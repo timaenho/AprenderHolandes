@@ -25,7 +25,10 @@ namespace AprenderHolandes.Controllers
         // GET: Evaluaciones
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Evaluaciones.ToListAsync());
+            var evaluaciones =  _context.Evaluaciones
+                .Include(e => e.Materia).OrderBy(e => e.Materia).ThenBy(e => e.Titulo);
+
+            return View(evaluaciones.ToList());
         }
 
         // GET: Evaluaciones/Details/5
@@ -37,6 +40,7 @@ namespace AprenderHolandes.Controllers
             }
 
             var evaluacion = await _context.Evaluaciones
+                .Include(e => e.Materia)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (evaluacion == null)
             {
