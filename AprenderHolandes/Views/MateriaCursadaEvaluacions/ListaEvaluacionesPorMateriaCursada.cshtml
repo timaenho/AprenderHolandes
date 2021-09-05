@@ -1,0 +1,37 @@
+﻿@model IEnumerable<AprenderHolandes.Models.Evaluacion>
+
+@{
+    ViewData["Title"] = "ListaEvaluacionesPorMateriaCursada";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Titulo"]</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    <a asp-action="AsignarUnoPorUno" asp-route-id="@item.Id">Asignar</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<div>
+   <a asp-action="AsignarTodos">Asignar Todas</a>
+</div>

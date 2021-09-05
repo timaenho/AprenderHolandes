@@ -191,15 +191,83 @@ namespace AprenderHolandes.Controllers
         {
             Profesor profesor = (Profesor)await _usermanager.GetUserAsync(HttpContext.User);
             var listaMateriaCursadas = _context.MateriaCursadas
+                .Include(mc => mc.MateriaCursadaEvaluaciones)
+                .ThenInclude(mce => mce.Evaluacion)
+                .ThenInclude(e => e.Materia)
                 .Include(mc => mc.Materia)
-                .FirstOrDefault(mc => mc.ProfesorId == profesor.Id);
+                .Where(mc => mc.ProfesorId == profesor.Id);
             return View(listaMateriaCursadas);
         }
 
-       
+        public async Task <IActionResult> ListaEvaluacionesPorMateriaCursada (Guid? Id)
+        {
+            var materiaCursada = _context.MateriaCursadas
+                .Include(mc => mc.Materia)
+                .ThenInclude(m => m.Evaluaciones)
+                .FirstOrDefault(mc => mc.MateriaCursadaId == Id);
+
+            ViewData["Titulo"] = materiaCursada.Nombre;
+            TempData["Id"] = materiaCursada.MateriaCursadaId;
+            return View(materiaCursada.Materia.Evaluaciones);
+        }
+
+        public async Task<IActionResult> AsignarUnoPorUno(Guid? Id)
+        {
+            var materiaCursadaId = (Guid)TempData["Id"];
+            var materiaCursada = _context.MateriaCursadas.FirstOrDefault(mc => mc.MateriaCursadaId == materiaCursadaId);
+            var evaluacion = _context.Evaluaciones.FirstOrDefault(e => e.Id == Id);
+
+            // completar
+            return View();
+        }
+
+        //public async Task <IActionResult> AddEvaluaciones (Guid? Id)
+        //{
+
+        //       var materiaCursada = _context.MateriaCursadas
+        //        .Include(mc => mc.Materia)
+        //        .ThenInclude(m => m.Evaluaciones)
+        //        .Include(mc => mc.MateriaCursadaEvaluaciones)
+        //        .FirstOrDefault(mc => mc.MateriaCursadaId == Id);
+
+        //    var evaluaciones = _context.Evaluaciones.Where(e => e.MateriaId == materiaCursada.MateriaId);
+
+        //    if(materiaCursada.MateriaCursadaEvaluaciones != null)
+        //    {
+        //        ViewData["Mensaje"] = "Las evaluaciones ya estan cargadas in este curso";
+        //        return View("ListaMateriaCursadas");
+        //    }
+        //    else
+        //    {
+        //        foreach(Evaluacion e in evaluaciones)
+        //        {
+        //            materiaCursada.MateriaCursadaEvaluaciones.Add(new MateriaCursadaEvaluacion
+        //            {
+        //                MateriaCursada = materiaCursada,
+        //                MateriaCursadaId = materiaCursada.MateriaCursadaId,
+        //                Activo = false,
+        //                Evaluacion = e,
+        //                EvaluacionId= e.Id,
+        //                Id= new Guid()
+        //            });
+        //        }
+        //        _context.MateriaCursadas.Update(materiaCursada);
+        //        _context.SaveChanges();
+        //        ViewData["Mensaje"] = "Agregaste las materias con exito";
+        //        return View("ListaMateriaCursada");
+        //    }
+
+
 
 
     }
+
+
+
+
+
+
+    
 
    
 }
