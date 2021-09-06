@@ -26,9 +26,32 @@ namespace AprenderHolandes.Controllers
         // GET: MateriaCursadaEvaluacions
         public async Task<IActionResult> Index()
         {
-            var dbContextInstituto = _context.MateriaCursadaEvaluaciones.Include(m => m.Evaluacion).Include(m => m.MateriaCursada)
+            var alumno = (Alumno)await _usermanager.GetUserAsync(HttpContext.User);
+            var alumnoDbcontext = _context.Alumnos
+                .Include(a => a.AlumnosMateriasCursadas)
+                .ThenInclude(amc => amc.MateriaCursada)
+                .FirstOrDefault(a => a.Id == alumno.Id);
+
+            Guid materiaCursadaId = Guid.Empty;
+       
+
+            foreach(AlumnoMateriaCursada amc in alumnoDbcontext.AlumnosMateriasCursadas)
+            {
+                if (amc.MateriaCursada.Activo)
+                {
+                     materiaCursadaId = amc.MateriaCursadaId;
+                    break;
+                }
+
+            }
+            var materiaCursadaEvaluaciones = _context.MateriaCursadaEvaluaciones
+                .Include(m => m.Evaluacion)
+                .Include(m => m.MateriaCursada)
+                .Where(mce => mce.MateriaCursadaId == materiaCursadaId && mce.Activo)
                 .OrderBy(mce => mce.MateriaCursadaId);
-            return View(await dbContextInstituto.ToListAsync());
+             var materiaCursadaEvaluacion = materiaCursadaEvaluaciones.FirstOrDefault(mce => mce.MateriaCursadaId == materiaCursadaId);
+            ViewData["Grupo"] = materiaCursadaEvaluacion.MateriaCursada.Nombre;
+            return View(await materiaCursadaEvaluaciones.ToListAsync());
         }
 
         // GET: MateriaCursadaEvaluacions/Details/5
@@ -195,7 +218,7 @@ namespace AprenderHolandes.Controllers
                 .ThenInclude(mce => mce.Evaluacion)
                 .ThenInclude(e => e.Materia)
                 .Include(mc => mc.Materia)
-                .Where(mc => mc.ProfesorId == profesor.Id);
+                .Where(mc => mc.ProfesorId == profesor.Id).OrderBy(mc=>mc.Nombre);
             return View(listaMateriaCursadas);
         }
 
@@ -245,12 +268,12 @@ namespace AprenderHolandes.Controllers
                 materiaCursada.MateriaCursadaEvaluaciones.Add(materCursadaEvaluacion);
                 _context.MateriaCursadas.Update(materiaCursada);
                 _context.SaveChanges();
-                TempData["Mensaje2"] = "Agregaste la evaluación con exito";
+                TempData["Mensaje"] = "Agregaste la evaluación con exito";
                 return RedirectToAction("ListaEvaluacionesPorMateriaCursada", new { Id = materiaCursadaId });
             }
             else
             {
-                TempData["Mensaje2"] = "La evaluacion ya esta cargada in este curso";
+                TempData["Mensaje"] = "La evaluacion ya esta cargada in este curso";
                 return RedirectToAction("ListaEvaluacionesPorMateriaCursada", new { Id = materiaCursadaId });
             }
 
@@ -288,14 +311,42 @@ namespace AprenderHolandes.Controllers
             }
                 _context.MateriaCursadas.Update(materiaCursada);
                 _context.SaveChanges();
-                ViewData["Mensaje"] = "Agregaste las materias con exito";
+                ViewData["Mensaje"] = "Agregaste las evaluaciones con exito";
             return RedirectToAction("ListaEvaluacionesPorMateriaCursada", new { Id = (Guid)TempData["Id"] });
             }
 
+        public async Task<IActionResult> ActivarMateriaCursadaEvaluacion(Guid? Id)
+        {
+            var materiaCursadaEvaluacion = _context.MateriaCursadaEvaluaciones.FirstOrDefault(mce => mce.Id == Id);
+            if (materiaCursadaEvaluacion == null)
+            {
+                return NotFound();
+            }
+            materiaCursadaEvaluacion.Activo = true;
+            _context.Update(materiaCursadaEvaluacion);
+            _context.SaveChanges();
 
 
-
+            return RedirectToAction("ListaMateriaCursadas");
         }
+
+        public async Task<IActionResult> DesActivarMateriaCursadaEvaluacion(Guid? Id)
+        {
+            var materiaCursadaEvaluacion = _context.MateriaCursadaEvaluaciones.FirstOrDefault(mce => mce.Id == Id);
+            if (materiaCursadaEvaluacion == null)
+            {
+                return NotFound();
+            }
+            materiaCursadaEvaluacion.Activo = false;
+            _context.Update(materiaCursadaEvaluacion);
+            _context.SaveChanges();
+
+
+            return RedirectToAction("ListaMateriaCursadas");
+        }
+
+
+    }
 
 
     }

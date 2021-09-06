@@ -12,15 +12,17 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                @Html.Raw("Grupo")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Materia.Nombre)
+                @Html.Raw("Evaluación")
             </th>
             <th>
-                @Html.Raw("Evaluaciones")
+
             </th>
-            <th></th>
+            <th>
+
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -30,10 +32,7 @@
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Materia.Nombre)
-            </td>
-            <td>
-                @foreach (var mce in item.MateriaCursadaEvaluaciones)
+                @foreach (var mce in item.MateriaCursadaEvaluaciones.OrderBy(mce => mce.Evaluacion.Titulo))
                 {
 
                     <div>@mce.Evaluacion.Titulo</div>
@@ -41,7 +40,22 @@
                 }
             </td>
             <td>
-                <a asp-action="ListaEvaluacionesPorMateriaCursada" asp-route-id="@item.MateriaCursadaId">Asignar Evaluaciones</a> 
+                @foreach (var mce in item.MateriaCursadaEvaluaciones)
+                {
+
+                    if (!mce.Activo)
+                    {
+                        <div><a asp-action="ActivarMateriaCursadaEvaluacion" asp-route-id="@mce.Id">activar</a></div>
+                        
+                    }
+                    else
+                    {
+                        <div><a asp-action="DesActivarMateriaCursadaEvaluacion" asp-route-id="@mce.Id">desactivar</a>  </div>
+                    }
+
+                }
+            <td>
+                <a asp-action="ListaEvaluacionesPorMateriaCursada" asp-route-id="@item.MateriaCursadaId">Asignar Evaluaciones</a>
             </td>
         </tr>
 }

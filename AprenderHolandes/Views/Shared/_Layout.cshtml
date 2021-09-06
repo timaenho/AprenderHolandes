@@ -43,6 +43,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Alumnos" asp-action="ContenidoIndex">Contenido</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="MateriaCursadaEvaluacions" asp-action="Index">Evaluaciones</a>
+                                </li>
                             }
                             if (User.IsInRole("Empleado"))
                             {
@@ -84,7 +87,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="MateriaCursadas" asp-action="">Mis Grupos</a>
                                 </li>
-                               
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Evaluaciones

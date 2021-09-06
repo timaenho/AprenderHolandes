@@ -5,11 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Evaluaciones</h1>
+<h4>@ViewData["Grupo"]</h4>
 
-<p>
-    <a asp-action="Create">Crear</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -17,10 +15,7 @@
                 @Html.DisplayNameFor(model => model.Evaluacion)
             </th>
             <th>
-                @Html.Raw("Grupo")
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Activo)
+                @Html.Raw("Link")
             </th>
             <th></th>
         </tr>
@@ -31,16 +26,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Evaluacion.Titulo)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.MateriaCursada.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Activo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                <a href="@item.Evaluacion.Descripcion">Empezar </a>
             </td>
         </tr>
 }
