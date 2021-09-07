@@ -22,9 +22,14 @@ namespace AprenderHolandes.Controllers
         // GET: AlumnoMateriaCursadaEvaluaciondaNotas
         public async Task<IActionResult> Index()
         {
+            // lista con los grupos y los mce's --> button ver alumnos
             var dbContextInstituto = _context.AlumnoMateriaCursadaEvaluaciondaNotas.Include(a => a.Alumno).Include(a => a.Profesor);
             return View(await dbContextInstituto.ToListAsync());
         }
+
+        //segunda pagina lista con los alumnos --> dar nota
+
+        //index alumno --> todas las notas por evaluación
 
         // GET: AlumnoMateriaCursadaEvaluaciondaNotas/Details/5
         public async Task<IActionResult> Details(Guid? id)
