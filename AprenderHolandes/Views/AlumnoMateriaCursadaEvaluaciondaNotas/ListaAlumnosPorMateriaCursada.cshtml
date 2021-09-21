@@ -1,0 +1,44 @@
+﻿@model IEnumerable<AprenderHolandes.Models.AlumnoMateriaCursada>
+
+@{
+    ViewData["Title"] = "ListaAlumnosPorMateriaCursada";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Titulo"]</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.Raw("Nombre")
+            </th>
+            <th>
+                @Html.Raw("Apellido")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calificacion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alumno.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alumno.Apellido)
+            </td>
+            <td>
+               
+            </td>
+            <td></td>
+        </tr>
+}
+    </tbody>
+</table>

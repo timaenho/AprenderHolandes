@@ -7,27 +7,49 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprenderHolandes.Data;
 using AprenderHolandes.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace AprenderHolandes.Controllers
 {
     public class AlumnoMateriaCursadaEvaluaciondaNotasController : Controller
     {
         private readonly DbContextInstituto _context;
+        private readonly UserManager<Persona> _usermanager;
 
-        public AlumnoMateriaCursadaEvaluaciondaNotasController(DbContextInstituto context)
+        public AlumnoMateriaCursadaEvaluaciondaNotasController(DbContextInstituto context, UserManager<Persona> usermanager)
         {
             _context = context;
+            _usermanager = usermanager;
+
         }
 
         // GET: AlumnoMateriaCursadaEvaluaciondaNotas
         public async Task<IActionResult> Index()
         {
-            // lista con los grupos y los mce's --> button ver alumnos
-            var dbContextInstituto = _context.AlumnoMateriaCursadaEvaluaciondaNotas.Include(a => a.Alumno).Include(a => a.Profesor);
-            return View(await dbContextInstituto.ToListAsync());
+            // lista con de  grupos y los mce's --> button ver alumnos
+            Profesor profesor = (Profesor)await _usermanager.GetUserAsync(HttpContext.User);
+            var listaMateriaCursadas = _context.MateriaCursadas
+                .Include(mc => mc.MateriaCursadaEvaluaciones)
+                .ThenInclude(mce => mce.Evaluacion)
+                .ThenInclude(e => e.Materia)
+                .Include(mc => mc.Materia)
+                .Where(mc => mc.ProfesorId == profesor.Id).OrderBy(mc => mc.Nombre);
+            return View(listaMateriaCursadas);
+           
+        }
+        public async Task<IActionResult> ListaAlumnosPorMateriaCursada(Guid? Id)
+        {
+            var materiaCursadaEvaluacion = _context.MateriaCursadaEvaluaciones
+                .Include(mce => mce.MateriaCursada)
+                .ThenInclude(mc => mc.AlumnoMateriaCursadas)
+                .ThenInclude(amc => amc.Alumno)
+                .FirstOrDefault(mce => mce.Id == Id);
+
+
+            return View(materiaCursadaEvaluacion.MateriaCursada.AlumnoMateriaCursadas);
         }
 
-        //segunda pagina lista con los alumnos --> dar nota
+        //segunda pagina lista de los alumnos --> dar nota
 
         //index alumno --> todas las notas por evaluación
 
