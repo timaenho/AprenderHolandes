@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AprenderHolandes.ViewModels;
 
 namespace AprenderHolandes.Data
 {
@@ -94,5 +95,8 @@ namespace AprenderHolandes.Data
                 #endregion
 
             }
+
+
+        public DbSet<AprenderHolandes.ViewModels.AlumnoNota> AlumnoNota { get; set; }
         }
 }

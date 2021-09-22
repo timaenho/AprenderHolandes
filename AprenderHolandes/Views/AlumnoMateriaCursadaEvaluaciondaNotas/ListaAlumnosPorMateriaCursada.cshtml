@@ -1,4 +1,5 @@
-﻿@model IEnumerable<AprenderHolandes.Models.AlumnoMateriaCursada>
+﻿@model IEnumerable<AprenderHolandes.ViewModels.AlumnoNota>
+
 
 @{
     ViewData["Title"] = "ListaAlumnosPorMateriaCursada";
@@ -7,9 +8,6 @@
 
 <h1>@ViewData["Titulo"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -20,25 +18,38 @@
                 @Html.Raw("Apellido")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Calificacion)
+                
             </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Nota)</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Alumno.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Alumno.Apellido)
-            </td>
-            <td>
-               
-            </td>
-            <td></td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AlumnoMateriaCursada.Alumno.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AlumnoMateriaCursada.Alumno.Apellido)
+                </td>
+                <td>
+                   
+                </td>
+                <td>
+                    @if (item.Nota == null)
+                    {
+                        <form method="post" asp-action="Create">
+                            <input type="text" id="txtNota" name="Nota" />
+                            <input type="submit" value="calificar" />
+                        </form>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Nota)
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

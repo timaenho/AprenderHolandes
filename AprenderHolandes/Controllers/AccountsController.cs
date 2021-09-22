@@ -112,8 +112,8 @@ namespace AprenderHolandes.Controllers
                     Apellido = modelo.Apellido,
                     FechaAlta = DateTime.Now,
                     Activo = false,
-                    NumeroMatricula = MatriculaMax
-
+                    NumeroMatricula = MatriculaMax,
+                    AlumnoMateriaCursadaEvaluaciondaNotas = new List<AlumnoMateriaCursadaEvaluaciondaNota>()
                 };
 
                 var resultadoRegistracion = await _userManager.CreateAsync(persona, modelo.Contrasena);

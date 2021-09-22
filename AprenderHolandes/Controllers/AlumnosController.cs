@@ -87,7 +87,7 @@ namespace AprenderHolandes.Controllers
                 alumno.Id = Guid.NewGuid();
                 alumno.FechaAlta = DateTime.Now;
                 alumno.UserName = alumno.Email;
-
+                alumno.AlumnoMateriaCursadaEvaluaciondaNotas = new List<AlumnoMateriaCursadaEvaluaciondaNota>();
                 foreach (Alumno a in Alumnos)
                 {
                     if (a.NumeroMatricula != 0)

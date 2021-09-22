@@ -10,7 +10,7 @@ namespace AprenderHolandes.Models
 {
     public class Alumno : Persona
     {
-		public bool Activo { get; set; } // supongo que no resistriciones seran necesarios
+		public bool Activo { get; set; }
 
 		[Required(ErrorMessage = Validaciones.Required)]
 		public int NumeroMatricula { get; set; }
@@ -20,6 +20,6 @@ namespace AprenderHolandes.Models
 		public Guid CarreraId { get; set; }
 		public Carrera Carrera { get; set; }
 
-		
+		public ICollection<AlumnoMateriaCursadaEvaluaciondaNota> AlumnoMateriaCursadaEvaluaciondaNotas { get; set; }
 	}
 }

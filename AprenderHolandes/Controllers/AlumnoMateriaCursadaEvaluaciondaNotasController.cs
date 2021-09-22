@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AprenderHolandes.Data;
 using AprenderHolandes.Models;
 using Microsoft.AspNetCore.Identity;
+using AprenderHolandes.ViewModels;
 
 namespace AprenderHolandes.Controllers
 {
@@ -43,10 +44,38 @@ namespace AprenderHolandes.Controllers
                 .Include(mce => mce.MateriaCursada)
                 .ThenInclude(mc => mc.AlumnoMateriaCursadas)
                 .ThenInclude(amc => amc.Alumno)
+                .ThenInclude(amc=>amc.AlumnoMateriaCursadaEvaluaciondaNotas)
+                .Include(mce=>mce.Evaluacion)
                 .FirstOrDefault(mce => mce.Id == Id);
 
 
-            return View(materiaCursadaEvaluacion.MateriaCursada.AlumnoMateriaCursadas);
+            //Titulo de la pagina
+            ViewData["Titulo"] = materiaCursadaEvaluacion.Evaluacion.Titulo;
+            var viewModelsAlumnosNota = new List<AlumnoNota>();
+
+             string nota = null;
+            //Crear la lista de los viewmodels
+            foreach(AlumnoMateriaCursada amc in materiaCursadaEvaluacion.MateriaCursada.AlumnoMateriaCursadas)
+            {
+                
+                 nota = _context.AlumnoMateriaCursadaEvaluaciondaNotas
+                               .Include(amcen => amcen.Alumno)
+                               .Include(amcen => amcen.MateriaCursadaEvaluacion)
+                                .FirstOrDefault(amcen =>
+                                amcen.AlumnoId == amc.AlumnoId
+                                && amcen.MateriaCursadaEvaluacionId == Id)?.Nota;
+                var newAlumnoNota = new AlumnoNota
+                {
+                    AlumnoMateriaCursada = amc,
+                    Nota = nota,
+                    MateriaCursadaEvaluacion = materiaCursadaEvaluacion
+                };
+
+                viewModelsAlumnosNota.Add(newAlumnoNota);
+            }
+
+
+            return View(viewModelsAlumnosNota);
         }
 
         //segunda pagina lista de los alumnos --> dar nota
