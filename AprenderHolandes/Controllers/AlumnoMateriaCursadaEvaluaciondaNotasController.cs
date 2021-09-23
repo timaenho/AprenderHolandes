@@ -40,7 +40,7 @@ namespace AprenderHolandes.Controllers
         }
         public async Task<IActionResult> ListaAlumnosPorMateriaCursada(Guid? Id)
         {
-            var materiaCursadaEvaluacion = _context.MateriaCursadaEvaluaciones
+            var materiaCursadaEvaluacion =  _context.MateriaCursadaEvaluaciones
                 .Include(mce => mce.MateriaCursada)
                 .ThenInclude(mc => mc.AlumnoMateriaCursadas)
                 .ThenInclude(amc => amc.Alumno)
@@ -115,18 +115,58 @@ namespace AprenderHolandes.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AlumnoId,Nota,ProfesorId")] AlumnoMateriaCursadaEvaluaciondaNota alumnoMateriaCursadaEvaluaciondaNota)
+        public async Task<IActionResult> Create(string? AlumnoId, string Nota, string MateriaCursadaEvaluacionId)
         {
-            if (ModelState.IsValid)
+            Profesor _Profesor = (Profesor)await _usermanager.GetUserAsync(HttpContext.User);
+            if(_Profesor == null)
             {
-                alumnoMateriaCursadaEvaluaciondaNota.Id = Guid.NewGuid();
-                _context.Add(alumnoMateriaCursadaEvaluaciondaNota);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            ViewData["AlumnoId"] = new SelectList(_context.Alumnos, "Id", "Discriminator", alumnoMateriaCursadaEvaluaciondaNota.AlumnoId);
-            ViewData["ProfesorId"] = new SelectList(_context.Profesores, "Id", "Discriminator", alumnoMateriaCursadaEvaluaciondaNota.ProfesorId);
-            return View(alumnoMateriaCursadaEvaluaciondaNota);
+
+            Alumno _Alumno = (Alumno)_context.Alumnos
+                .Include(a => a.AlumnoMateriaCursadaEvaluaciondaNotas)
+                .FirstOrDefault(a => a.Id == Guid.Parse(AlumnoId));
+            if(_Alumno == null)
+            {
+                return NotFound();
+            }
+
+            var _MateriaCursadaEvaluacion = _context.MateriaCursadaEvaluaciones
+              
+                .FirstOrDefault(mce => mce.Id == Guid.Parse(MateriaCursadaEvaluacionId));
+
+            if(_MateriaCursadaEvaluacion == null)
+            {
+                return NotFound();
+            }
+            var nota = Nota;
+
+            if(nota!="0" && nota != "1" && nota != "2" && nota != "3" && nota != "4" && nota != "5" && nota != "6" && nota != "7" && nota != "8" && nota != "9" &&
+                nota != "10")
+            {
+                TempData["Mensaje"] = "Ingrese un numero >= 0 y <= 10"; 
+                return RedirectToAction("ListaAlumnosPorMateriaCursada", new {Id = _MateriaCursadaEvaluacion.Id });
+            }
+
+            var amcen = new AlumnoMateriaCursadaEvaluaciondaNota
+            {
+                Id = Guid.NewGuid(),
+                Profesor = _Profesor,
+                ProfesorId = _Profesor.Id,
+                Alumno = _Alumno,
+                AlumnoId = _Alumno.Id,
+                Nota = nota,
+                MateriaCursadaEvaluacion = _MateriaCursadaEvaluacion,
+                MateriaCursadaEvaluacionId = _MateriaCursadaEvaluacion.Id
+                
+            };
+           
+            _Alumno.AlumnoMateriaCursadaEvaluaciondaNotas.Add(amcen);
+            _context.AlumnoMateriaCursadaEvaluaciondaNotas.Add(amcen);
+            _context.Alumnos.Update(_Alumno);
+            _context.SaveChanges();
+
+            return RedirectToAction("ListaAlumnosPorMateriaCursada", new { Id = _MateriaCursadaEvaluacion.Id });
         }
 
         // GET: AlumnoMateriaCursadaEvaluaciondaNotas/Edit/5
