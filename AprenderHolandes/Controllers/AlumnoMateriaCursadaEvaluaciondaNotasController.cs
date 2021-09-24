@@ -115,7 +115,7 @@ namespace AprenderHolandes.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string? AlumnoId, string Nota, string MateriaCursadaEvaluacionId)
+        public async Task<IActionResult> Create(string? AlumnoId, string? Nota, string? MateriaCursadaEvaluacionId)
         {
             Profesor _Profesor = (Profesor)await _usermanager.GetUserAsync(HttpContext.User);
             if(_Profesor == null)
@@ -141,8 +141,7 @@ namespace AprenderHolandes.Controllers
             }
             var nota = Nota;
 
-            if(nota!="0" && nota != "1" && nota != "2" && nota != "3" && nota != "4" && nota != "5" && nota != "6" && nota != "7" && nota != "8" && nota != "9" &&
-                nota != "10")
+            if(!EsUnaNotaValida(nota))
             {
                 TempData["Mensaje"] = "Ingrese un numero >= 0 y <= 10"; 
                 return RedirectToAction("ListaAlumnosPorMateriaCursada", new {Id = _MateriaCursadaEvaluacion.Id });
@@ -164,12 +163,23 @@ namespace AprenderHolandes.Controllers
             _Alumno.AlumnoMateriaCursadaEvaluaciondaNotas.Add(amcen);
             _context.AlumnoMateriaCursadaEvaluaciondaNotas.Add(amcen);
             _context.Alumnos.Update(_Alumno);
-            _context.SaveChanges();
+            _context?.SaveChanges();
 
             return RedirectToAction("ListaAlumnosPorMateriaCursada", new { Id = _MateriaCursadaEvaluacion.Id });
         }
 
-        // GET: AlumnoMateriaCursadaEvaluaciondaNotas/Edit/5
+        
+
+        private bool EsUnaNotaValida (string nota)
+        {
+            bool EsUnaNotaValida = true;
+            if (nota == null ||( nota != "0" && nota != "1" && nota != "2" && nota != "3" && nota != "4" && nota != "5" && nota != "6" && nota != "7" && nota != "8" && nota != "9" &&
+               nota != "10"))
+            {
+                EsUnaNotaValida = false;
+            }
+                return EsUnaNotaValida;
+        }
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -225,35 +235,35 @@ namespace AprenderHolandes.Controllers
         }
 
         // GET: AlumnoMateriaCursadaEvaluaciondaNotas/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> Delete(string? AlumnoId, string? Nota, string? MateriaCursadaEvaluacionId)
         {
-            if (id == null)
+
+            var _MateriaCursadaEvaluacionId = Guid.Parse(MateriaCursadaEvaluacionId);
+            var _AlumnoId = Guid.Parse(AlumnoId);
+            if (!EsUnaNotaValida(Nota))
+            {
+                return NotFound();
+            }
+            var amcen = _context.AlumnoMateriaCursadaEvaluaciondaNotas
+                .FirstOrDefault(amcen => amcen.AlumnoId == _AlumnoId 
+                && amcen.MateriaCursadaEvaluacionId == _MateriaCursadaEvaluacionId
+                && amcen.Nota == Nota);
+
+            if(amcen == null)
             {
                 return NotFound();
             }
 
-            var alumnoMateriaCursadaEvaluaciondaNota = await _context.AlumnoMateriaCursadaEvaluaciondaNotas
-                .Include(a => a.Alumno)
-                .Include(a => a.Profesor)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (alumnoMateriaCursadaEvaluaciondaNota == null)
-            {
-                return NotFound();
-            }
-
-            return View(alumnoMateriaCursadaEvaluaciondaNota);
+            _context.AlumnoMateriaCursadaEvaluaciondaNotas.Remove(amcen);
+            _context.SaveChanges();
+           
+            return RedirectToAction("ListaAlumnosPorMateriaCursada", new {Id = _MateriaCursadaEvaluacionId});
         }
 
         // POST: AlumnoMateriaCursadaEvaluaciondaNotas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var alumnoMateriaCursadaEvaluaciondaNota = await _context.AlumnoMateriaCursadaEvaluaciondaNotas.FindAsync(id);
-            _context.AlumnoMateriaCursadaEvaluaciondaNotas.Remove(alumnoMateriaCursadaEvaluaciondaNota);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+       
+       
 
         private bool AlumnoMateriaCursadaEvaluaciondaNotaExists(Guid id)
         {

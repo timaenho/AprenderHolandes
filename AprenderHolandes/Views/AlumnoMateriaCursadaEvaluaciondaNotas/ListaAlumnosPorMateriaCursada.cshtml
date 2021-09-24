@@ -35,24 +35,33 @@
                     @Html.DisplayFor(modelItem => item.AlumnoMateriaCursada.Alumno.Apellido)
                 </td>
                 <td>
-                   
                 </td>
                 <td>
                     @if (item.Nota == null)
                     {
-                    <form method="post" asp-action="Create">
-                        <input hidden type="text" id="idAlumno" name="AlumnoId" value="@item.AlumnoMateriaCursada.Alumno.Id" />
-                        <input type="text" id="txtNota" name="Nota" />
-                        <input hidden type ="text" id="idMateriaCursadaEvaluacion" name="MateriaCursadaEvaluacionId" value="@item.MateriaCursadaEvaluacion.Id" />
-                        <input type="submit" value="calificar" />
-                    </form>
+                        <form method="post" asp-action="Create">
+                            <input hidden type="text" id="idAlumno" name="AlumnoId" value="@item.AlumnoMateriaCursada.Alumno.Id" />
+                            <input type="text" id="txtNota" name="Nota" />
+                            <input hidden type="text" id="idMateriaCursadaEvaluacion" name="MateriaCursadaEvaluacionId" value="@item.MateriaCursadaEvaluacion.Id" />
+                            <input type="submit" value="calificar" />
+                        </form>
                     }
                     else
                     {
-                        @Html.DisplayFor(modelItem => item.Nota)
+
+                        <form method="post" asp-action="Delete">
+                            <input hidden type="text" id="idAlumno" name="AlumnoId" value="@item.AlumnoMateriaCursada.Alumno.Id" />
+                            <input hidden type="text" id="txtNota" name="Nota" value="@item.Nota" />
+                            <input hidden type="text" id="idMateriaCursadaEvaluacion" name="MateriaCursadaEvaluacionId" value="@item.MateriaCursadaEvaluacion.Id" />
+                            <span>@Html.DisplayFor(modelItem => item.Nota) - <input type="submit" value="editar" /></span>
+                        </form>
                     }
                 </td>
-            </tr>
+           </tr>
         }
+        
     </tbody>
 </table>
+<div>
+    <a asp-action="Index">Volver</a>
+</div>
