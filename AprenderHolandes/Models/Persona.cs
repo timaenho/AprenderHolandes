@@ -50,6 +50,9 @@ namespace AprenderHolandes.Models
 
         //public string Legajo { get; set; }
 
+        public ICollection<Mensaje> Mensajes { get; set; }
+
+
 
     }
 }

@@ -4,14 +4,16 @@ using AprenderHolandes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprenderHolandes.Migrations
 {
     [DbContext(typeof(DbContextInstituto))]
-    partial class DbContextInstitutoModelSnapshot : ModelSnapshot
+    [Migration("20210926040018_foro")]
+    partial class foro
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -542,11 +544,6 @@ namespace AprenderHolandes.Migrations
                 {
                     b.HasBaseType("AprenderHolandes.Models.Mensaje");
 
-                    b.Property<Guid>("PreguntaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasIndex("PreguntaId");
-
                     b.HasDiscriminator().HasValue("Respuesta");
                 });
 
@@ -855,17 +852,6 @@ namespace AprenderHolandes.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AprenderHolandes.Models.Respuesta", b =>
-                {
-                    b.HasOne("AprenderHolandes.Models.Pregunta", "Pregunta")
-                        .WithMany("Respuestas")
-                        .HasForeignKey("PreguntaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pregunta");
-                });
-
             modelBuilder.Entity("AprenderHolandes.Models.Alumno", b =>
                 {
                     b.HasOne("AprenderHolandes.Models.Carrera", "Carrera")
@@ -919,11 +905,6 @@ namespace AprenderHolandes.Migrations
             modelBuilder.Entity("AprenderHolandes.Models.MateriaCursadaEvaluacion", b =>
                 {
                     b.Navigation("AlumnoMateriaCursadaEvaluaciondaNotas");
-                });
-
-            modelBuilder.Entity("AprenderHolandes.Models.Pregunta", b =>
-                {
-                    b.Navigation("Respuestas");
                 });
 
             modelBuilder.Entity("AprenderHolandes.Models.Persona", b =>

@@ -32,7 +32,10 @@ namespace AprenderHolandes.Data
             public DbSet<Rol> Roles { get; set; }
             public DbSet<AlumnoMateriaCursadaEvaluaciondaNota> AlumnoMateriaCursadaEvaluaciondaNotas { get; set; }
             public DbSet<Evaluacion> Evaluaciones { get; set; }
-            public DbSet<MateriaCursadaEvaluacion> MateriaCursadaEvaluaciones{ get; set; }
+            public DbSet<MateriaCursadaEvaluacion> MateriaCursadaEvaluaciones { get; set; }
+            public DbSet<Mensaje> Mensajes{ get; set; }
+            public DbSet<Respuesta> Respuestas{ get; set; }
+            public DbSet<Pregunta> Preguntas{ get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
@@ -97,6 +100,5 @@ namespace AprenderHolandes.Data
             }
 
 
-        public DbSet<AprenderHolandes.ViewModels.AlumnoNota> AlumnoNota { get; set; }
         }
 }

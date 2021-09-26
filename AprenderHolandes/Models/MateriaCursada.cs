@@ -58,5 +58,7 @@ namespace AprenderHolandes.Models
 		public ICollection<MateriaCursadaEvaluacion> MateriaCursadaEvaluaciones {get; set;}
 
 		public ICollection<Clase> Clases { get; set; }
+
+		public ICollection<Mensaje> Mensajes{ get; set; }
 	}
 }
