@@ -47,11 +47,11 @@ namespace AprenderHolandes.Controllers
 
         // GET: Foro/Details/5
 
-        public async Task<IActionResult> IndexProfesor()
-        {
+        //public async Task<IActionResult> IndexProfesor()
+        //{
   
   
-        }
+        //}
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
