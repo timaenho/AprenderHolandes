@@ -50,8 +50,16 @@ namespace AprenderHolandes.Controllers
                 .Where(mce => mce.MateriaCursadaId == materiaCursadaId && mce.Activo)
                 .OrderBy(mce => mce.MateriaCursadaId);
              var materiaCursadaEvaluacion = materiaCursadaEvaluaciones.FirstOrDefault(mce => mce.MateriaCursadaId == materiaCursadaId);
-            ViewData["Grupo"] = materiaCursadaEvaluacion.MateriaCursada.Nombre;
-            return View(await materiaCursadaEvaluaciones.ToListAsync());
+            if(materiaCursadaEvaluacion == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ViewData["Grupo"] = materiaCursadaEvaluacion.MateriaCursada.Nombre;
+                return View(await materiaCursadaEvaluaciones.ToListAsync());
+            }
+            
         }
 
         // GET: MateriaCursadaEvaluacions/Details/5

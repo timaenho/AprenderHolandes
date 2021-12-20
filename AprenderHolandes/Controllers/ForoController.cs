@@ -34,15 +34,24 @@ namespace AprenderHolandes.Controllers
 
             var materiaCursada = Alumno.AlumnosMateriasCursadas
                 .FirstOrDefault(amc => amc.MateriaCursada.Activo);
-
-            var materiaCursadaId = materiaCursada.MateriaCursadaId;
-
-            var preguntas = _context.Preguntas
+            if(materiaCursada == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var materiaCursadaId = materiaCursada.MateriaCursadaId;
+                var preguntas = _context.Preguntas
                 .Include(m => m.MateriaCursada)
                 .Include(m => m.Persona)
                 .Where(p => p.MateriaCursadaId == materiaCursadaId);
 
-            return View(await preguntas.ToListAsync());
+                return View(await preguntas.ToListAsync());
+
+            }
+
+
+            
         }
 
         // GET: Foro/Details/5
