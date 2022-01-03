@@ -4,14 +4,16 @@ using AprenderHolandes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprenderHolandes.Migrations
 {
     [DbContext(typeof(DbContextInstituto))]
-    partial class DbContextInstitutoModelSnapshot : ModelSnapshot
+    [Migration("20220103160424_Persona_mas_compacto")]
+    partial class Persona_mas_compacto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -28,26 +28,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Apellido)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dni)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Legajo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>*@
-            
             <th></th>
         </tr>
     </thead>
@@ -61,25 +41,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Apellido)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dni)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Legajo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>*@
-            
 
             @if (_signInManager.IsSignedIn(User))
             {

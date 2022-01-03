@@ -59,7 +59,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var amc in Model.AlumnoMateriaCursadas)
+                @foreach (var amc in Model.AlumnoMateriaCursadas)
             {
                 <tr>
                     <td>
@@ -70,9 +70,10 @@
                     </td>
                 </tr>
             }
+                   
         </tbody>
     </table>
-    @(User.IsInRole("Profesor")){
+    @if(User.IsInRole("Profesor")){
     <div>
         <a asp-action="Edit" asp-route-id="@Model.MateriaCursadaId">Editar</a>
     </div>
