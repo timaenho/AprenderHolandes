@@ -10,17 +10,6 @@ namespace AprenderHolandes.Models
 {
     public class Persona : IdentityUser<Guid>
     {
-        //[Key]
-        //public Guid Id { get; set; }
-
-        //[Required(ErrorMessage = Validaciones.Required)]
-        //[MaxLength(50, ErrorMessage = Validaciones.MaxLength)]
-        //public string UserName { get; set; }
-
-        //[Required(ErrorMessage = Validaciones.Required)]
-        //[DataType(DataType.Password)]
-        //[Display(Name ="Contraseña")]
-        //public override string PasswordHash { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

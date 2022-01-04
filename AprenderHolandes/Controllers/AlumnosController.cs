@@ -679,6 +679,11 @@ namespace AprenderHolandes.Controllers
             {
                 return View("IndexHolandesNivel6");
             }
+            if(mcActivo == null)
+            {
+                return View("AccesoDenegado", "Accounts");
+
+            }
 
             return View("AccesoDenegado", "Accounts");
         }

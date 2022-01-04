@@ -12,9 +12,10 @@
 </head>
 <body>
     <header>
+        @if (signInManager.IsSignedIn(User)) {
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TAalGenio</a>
+               <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TAalGenio</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,8 +25,6 @@
                         <partial name="_LoginInfo" />
                     </ul>
                     <ul class="navbar-nav flex-grow-1">
-                        @if (signInManager.IsSignedIn(User))
-                        {
                             @if (User.IsInRole("Alumno"))
                             {
                                 <li class="nav-item">
@@ -50,7 +49,7 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Foro" asp-action="IndexAlumno">Foro</a>
                                 </li>
                             }
-                            if (User.IsInRole("Empleado"))
+                            @if(User.IsInRole("Empleado"))
                             {
 
                                 <li class="nav-item">
@@ -104,25 +103,47 @@
 
 
                             }
-
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Info">Info</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Contact">Contact</a>
-                            </li>
-                        }
                     </ul>
                 </div>
             </div>
         </nav>
-
+        }else{
+            <nav class="navbar bg-light navbar-expand-lg fixed-top">
+                	<div class="container">
+                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TAalGenio</a>
+                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					        <span class="navbar-toggler-icon"></span>
+				        </button>
+                        <div class="collapse navbar-collapse flex-sm-row-reverse" id="navbarNav">
+                                 <ul class="navbar-nav">
+                                      <partial name="_LoginInfo" />
+                                </ul>
+                            <ul class="navbar-nav flex-grow-1" id="navScrollspy">
+						        <li class="nav-item">
+							        <a class="nav-link" href="#section-hero">To the top</a>
+						        </li>
+						        <li class="nav-item">
+							        <a class="nav-link" href="#section-description">Description</a>
+						        </li>
+						        <li class="nav-item">
+							        <a class="nav-link" href="#section-trailer">Trailer</a>
+						        </li>
+						        <li class="nav-item">
+							        <a class="nav-link" href="#section-showcase">Showcase</a>
+						        </li>
+						        <li class="nav-item">
+							        <a class="nav-link" href="#section-features">Features</a>
+						        </li>
+						        <li class="nav-item">
+							        <a class="nav-link" href="#section-pricing">Pricing</a>
+						        </li>
+						        <li class="nav-item">
+							        <a class="nav-link" href="#section-reviews">Reviews</a>
+						        </li>
+                </div>
+             </div>
+        </nav>
+        }
     </header>
     <div class="container">
         <main role="main" class="pb-3">
